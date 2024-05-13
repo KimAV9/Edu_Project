@@ -6,6 +6,7 @@ from pages.auth_page import AuthPage
 from keyboard import press
 from time import sleep
 import random
+from pages.registration_page import RandomGenerator
 
 browser = webdriver.Chrome
 login = (By.XPATH, '//a[text() = "Log In"]')
@@ -15,8 +16,7 @@ login_button = (By.XPATH, '//button[@class = "_6dgzsvq css-j6v0dd"]')
 search_button = (By.XPATH, '//input[@class="react-autosuggest__input"]')
 
 c_prof_menu = (By.XPATH, '//button[@data-track-component="profile_drop_down_btn"]')
-c_settings = (By.XPATH,
-              '//li[@class="rc-AuthenticatedAccountDropdown c-ph-right-nav-button c-ph-right-nav-desktop-only c-ph-avatar-button c-ph-right-nav-no-border c-ph-right-nav-expanded css-j4mi9a"]/descendant::a[@data-track-href="/account-settings"][1]')
+c_settings = (By.XPATH, '//div[@class="header-right-nav-wrapper css-1h9ktwj"]/descendant::*[12]')
 
 c_fullname_field = (By.ID, 'settings-basic-full-name')
 c_email_field = (By.ID, 'settings-basic-email')
@@ -26,31 +26,7 @@ c_language_menu = (By.ID, 'settings-basic-language')
 c_lang_select = (By.XPATH, '//select[@name="locale"]/descendant::option[1]')
 c_save_button = (By.XPATH, '//div[@class="rc-BasicInformation"]//child::span[@class="cds-button-label"]')
 
-
-class RandomGenerator:
-    def __init__(self, min_length=4, max_length=10):
-        self.vowels = "aeiou"
-        self.consonants = "bcdghjklmnpqrstvwxyz"
-        self.numbers = "0123456789"
-        self.min_length = min_length
-        self.max_length = max_length
-
-    def generate_name(self):
-        length = random.randint(self.min_length, self.max_length)
-        gen_name = "".join(random.choice(self.consonants + self.vowels) for x in range(length))
-        return gen_name.capitalize()
-
-    def generate_password(self):
-        length = random.randint(8, 12)
-        gen_password = "".join(random.choice(self.consonants + self.vowels + self.numbers) for x in range(length))
-        print(gen_password)
-        return gen_password
-
-    def generate_email(self):
-        return self.generate_name() + ('@cats.meows')
-
-
-text = RandomGenerator().generate_name()
+text = RandomGenerator().generate_text()
 email = RandomGenerator().generate_email()
 
 

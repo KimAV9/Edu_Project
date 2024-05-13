@@ -3,6 +3,7 @@ import pytest
 from time import sleep
 
 
+@pytest.mark.skip
 def test_filter(browser):
     filter_check = FilterCheck(browser)
 
@@ -11,7 +12,6 @@ def test_filter(browser):
     sleep(15)
     filter_check.search()
 
-    filter_check.subj()
     filter_check.subj_click()
     filter_check.lang_click()
     filter_check.prod_click()

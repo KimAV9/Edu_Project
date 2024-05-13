@@ -24,7 +24,7 @@ class RandomGenerator:
         self.min_length = min_length
         self.max_length = max_length
 
-    def generate_name(self):
+    def generate_text(self):
         length = random.randint(self.min_length, self.max_length)
         gen_name = "".join(random.choice(self.consonants + self.vowels) for x in range(length))
         return gen_name.capitalize()
@@ -35,8 +35,11 @@ class RandomGenerator:
         print(gen_password)
         return gen_password
 
+    def generate_email(self):
+        return self.generate_text() + ('@cats.meows')
 
-name = RandomGenerator().generate_name()
+
+name = RandomGenerator().generate_text()
 password = RandomGenerator().generate_password()
 
 

@@ -4,8 +4,8 @@ from pages.auth_page import AuthPage
 from time import sleep
 import pytest_order
 
+
 @allure.story('Authentication check')
-@pytest.mark.skip
 def test_auth(browser):
     auth_page = AuthPage(browser)
     auth_page.open()

@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
-from pages.registration_page import password
+from pages.registration_page import name
 import random
 import allure
 from time import sleep
@@ -40,6 +40,7 @@ v_view_all_notes = (By.XPATH, '//div[@aria-labelledby="cds-react-aria-214-tab-NO
 v_click_the_note = ()
 v_check_timing = (By.XPATH, '//div[@aria-valuetext="* seconds"]')
 
+t_start_assigment = (By.XPATH, '//button[@data-test="action-button"]')
 t_answer1 = (By.XPATH, '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][1]')
 t_answer2 = (By.XPATH,
              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][4]')
@@ -98,68 +99,80 @@ class CoursePage(AuthPage):
 
     @allure.step('Close goals window')
     def close_goals_window(self):
-        return self.browser.find(c_close_goals_window)
+        return self.browser.find(c_close_goals_window).click()
 
     @allure.step('Watch introduction to course video')
     def watch_intro(self):
-        return self.browser.find(c_click_watch_intro)
+        return self.browser.find(c_click_watch_intro).click()
 
     @allure.step('Click reading #1 page')
     def click_read1(self):
-        return
+        return self.browser.find(c_read_project_overview)
 
     @allure.step('Click "Mark as completed" reading #1')
     def click_complete(self):
-        return
+        return self.browser.find(c_mark_complete).click()
 
     @allure.step('Click reading #2 page')
     def click_read2(self):
-        return
+        return self.browser.find(c_read_comm_disc).click()
 
     @allure.step('Click "Mark as completed" reading #2')
     def click_complete2(self):
-        return
+        return self.browser.find(c_mark_complete).click()
 
     @allure.step('Click lab page')
     def click_lab(self):
-        return
+        #добавить функционал для смены страницы
+        return self.browser.find(c_click_lab).click()
 
     @allure.step('Click open lab')
     def click_open_lab(self):
-        return
+        return self.browser.find(c_open_lab).click()
 
     @allure.step('Click open lab task')
     def click_open_task(self):
-        return
+        return self.browser.find(c_how_want_to_learn_open).click()
 
     @allure.step('Click quiz page')
     def click_quiz(self):
-        return
+        return self.browser.find(c_click_quiz).click()
 
     @allure.step('Click start quiz')
     def click_start_quiz(self):
-        return
+        return self.browser.find(t_start_assigment).click()
 
     @allure.step('Answer questions')
     def answer_quiz(self):
-        return
+        self.browser.find(t_answer1).click()
+        self.browser.find(t_answer2).click()
+        self.browser.find(t_answer3).click()
+        self.browser.find(t_answer4).click()
+        self.browser.find(t_answer5).click()
+        self.browser.find(t_answer6).click()
+        self.browser.find(t_answer7).click()
+        self.browser.find(t_answer8).click()
+        self.browser.find(t_answer9).click()
+        self.browser.find(t_answer10).click()
+        self.browser.find(t_answer11).click()
+        self.browser.find(t_answer12).click()
 
     @allure.step('Accept the agreement')
     def click_i_understand(self):
-        return
+        return self.browser.find(t_agree_to_terms).click()
 
     @allure.step('Write name')
     def write_name(self):
-        return
+        return self.browser.find(t_write_name).send_keys(name)
 
     @allure.step('Submit quiz')
     def submit_quiz(self):
-        return
+        return t_submit
 
     @allure.step('Click survey')
     def click_survey(self):
-        return
+        return c_click_survey
 
     @allure.step('Click "Mark as completed" for quiz')
-    def click_comleted_survey(self):
-        return
+    def click_completed_survey(self):
+        return c_mark_complete

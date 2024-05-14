@@ -29,6 +29,12 @@ c_save_button = (By.XPATH, '//div[@class="rc-BasicInformation"]//child::span[@cl
 text = RandomGenerator().generate_text()
 email = RandomGenerator().generate_email()
 
+p_current_password = (By.ID, 'settings-password-current')
+p_new_password = (By.ID, 'settings-password-new')
+p_retype_password = (By.ID, 'settings-password-new-confirm')
+p_change_password = (By.XPATH, '//div[@class="rc-Password"]/descendant::button')
+p_confirm_password = (By.XPATH, '//span[@class="rc-StatusMessage success"]')
+
 
 class AccountSettings(AuthPage):
     def __init__(self, browser):
@@ -80,3 +86,53 @@ class AccountSettings(AuthPage):
     @allure.step('Save changes')
     def click_save_button(self):
         return self.find(c_save_button).click()
+
+
+class PasswordChange(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open settings page')
+    def open_settings(self):
+        return self.find(c_settings).click()
+
+    @allure.step('Enter current password')
+    def write_current_password(self):
+        return self.find(p_current_password).send_keys("записать пароль")
+
+    @allure.step('Enter new password')
+    def write_new_password(self):
+        return self.find(p_new_password).send_keys()
+
+    @allure.step('Retype new password')
+    def retype_new_password(self):
+        return self.find(p_retype_password).send_keys()
+
+    @allure.step('Change password')
+    def click_change_password(self):
+        return self.find(p_change_password).click()
+
+    @allure.step('Check for update')
+    def check_password(self):
+        return self.find(p_confirm_password)
+
+
+class CommunicationPrefenreces(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open settings page')
+    def open_settings(self):
+        return self.find(c_settings).click()
+
+    @allure.step('Click Opt-out of all Coursera emails (Optional)')
+    def click_opt_out(self):
+        return

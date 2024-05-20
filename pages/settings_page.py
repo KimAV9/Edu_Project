@@ -1,6 +1,7 @@
 import allure
 import pytest
 from selenium import webdriver
+from selenium.common import ElementClickInterceptedException
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
 from keyboard import press
@@ -16,7 +17,7 @@ login_button = (By.XPATH, '//button[@class = "_6dgzsvq css-j6v0dd"]')
 search_button = (By.XPATH, '//input[@class="react-autosuggest__input"]')
 
 c_prof_menu = (By.XPATH, '//button[@data-track-component="profile_drop_down_btn"]')
-c_settings = (By.XPATH, '//div[@class="header-right-nav-wrapper css-1h9ktwj"]/descendant::*[12]')
+c_settings = (By.XPATH, '//div[@class="header-right-nav-wrapper css-1h9ktwj"]/descendant::li[@role="menuitem"][13]')
 
 c_fullname_field = (By.ID, 'settings-basic-full-name')
 c_email_field = (By.ID, 'settings-basic-email')
@@ -34,6 +35,17 @@ p_new_password = (By.ID, 'settings-password-new')
 p_retype_password = (By.ID, 'settings-password-new-confirm')
 p_change_password = (By.XPATH, '//div[@class="rc-Password"]/descendant::button')
 p_confirm_password = (By.XPATH, '//span[@class="rc-StatusMessage success"]')
+
+com_open = (By.XPATH, '//*[@id="rendered-content"]/descendant::div[@class="cds-MenuListItem-content"][2]')
+com_opt_out = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::input[1]')
+com_pers_recom = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::input[2]')
+com_notif_promo = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::input[3]')
+com_info_degr = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::input[4]')
+com_surv = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::input[5]')
+com_save = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::button[1]')
+
+com_proj_netw = (By.ID, '565')
+com_save2 = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::button[3]')
 
 
 class AccountSettings(AuthPage):
@@ -61,13 +73,15 @@ class AccountSettings(AuthPage):
 
     @allure.step('Write new name')
     def write_fullname_field(self):
-        return self.find(c_fullname_field).sendkeys(text)
+        self.find(c_fullname_field).clear()
+        return self.find(c_fullname_field).send_keys(text)
 
     @allure.step('Write new email')
     def write_email_field(self):
-        return self.find(c_email_field).send_keys(email)
+        self.find(c_email_field).clear()
+        return self.find(c_email_field).send_keys('Tobey123@Mark.com')
 
-    @allure.step('Open timizone dropdown menu')
+    @allure.step('Open timezone dropdown menu')
     def click_timezone_menu(self):
         return self.find(c_timezone_menu).click()
 
@@ -96,21 +110,25 @@ class PasswordChange(AuthPage):
     def open2(self):
         return self.main_page()
 
+    @allure.step('Open account menu')
+    def open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
     @allure.step('Open settings page')
     def open_settings(self):
         return self.find(c_settings).click()
 
     @allure.step('Enter current password')
     def write_current_password(self):
-        return self.find(p_current_password).send_keys("записать пароль")
+        return self.find(p_current_password).send_keys("KappaKeepo1423")
 
     @allure.step('Enter new password')
     def write_new_password(self):
-        return self.find(p_new_password).send_keys()
+        return self.find(p_new_password).send_keys('KappaKeepoq1w2e3')
 
     @allure.step('Retype new password')
     def retype_new_password(self):
-        return self.find(p_retype_password).send_keys()
+        return self.find(p_retype_password).send_keys('KappaKeepoq1w2e3')
 
     @allure.step('Change password')
     def click_change_password(self):
@@ -121,7 +139,7 @@ class PasswordChange(AuthPage):
         return self.find(p_confirm_password)
 
 
-class CommunicationPrefenreces(AuthPage):
+class CommunicationPreferences(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
 
@@ -129,10 +147,52 @@ class CommunicationPrefenreces(AuthPage):
     def open2(self):
         return self.main_page()
 
+    @allure.step('Open account menu')
+    def open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
     @allure.step('Open settings page')
     def open_settings(self):
         return self.find(c_settings).click()
 
+    @allure.step('Open Communication Preferences')
+    def open_comm_pref(self):
+        return self.find(com_open).click()
+
     @allure.step('Click Opt-out of all Coursera emails (Optional)')
     def click_opt_out(self):
-        return
+        return self.find(com_opt_out).click()
+
+    @allure.step('Click Weekly personalized course recommendations')
+    def click_pers_recom(self):
+        while True:
+            try:
+                self.find(com_pers_recom).click()
+                break
+            except ElementClickInterceptedException:
+                self.find(com_opt_out).click()
+
+
+    @allure.step('Click Weekly notifications about promotions, new courses and programs, and special events')
+    def click_notif_promo(self):
+        return self.find(com_notif_promo)
+
+    @allure.step('Click Information on online Master’s and Bachelor’s Degree programs')
+    def click_info_degr(self):
+        return self.find(com_info_degr).click()
+
+    @allure.step('Click Surveys and invitations to help us improve Coursera content and your experience')
+    def click_surv(self):
+        return self.find(com_surv).click()
+
+    @allure.step('Save changes')
+    def save1(self):
+        return self.find(com_save).click()
+
+    @allure.step('Click Coursera Project Network')
+    def click_proj_netw(self):
+        return self.find(com_proj_netw).click()
+
+    @allure.step('Save changes')
+    def save2(self):
+        return self.find(com_save2).click()

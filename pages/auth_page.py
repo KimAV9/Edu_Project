@@ -31,7 +31,7 @@ class AuthPage(BasePage):
     @allure.step('Enter Email')
     def login_email(self):
         self.find(login_email).click()
-        return self.find(login_email).send_keys('tobex26655@evimzo.com')
+        return self.find(login_email).send_keys('Tobey123@Mark.com')
 
     @allure.step('Enter Password')
     def login_password(self):

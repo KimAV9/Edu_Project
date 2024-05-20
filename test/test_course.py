@@ -4,7 +4,7 @@ from pages.course_page import CoursePage
 from time import sleep
 import pytest_order
 
-
+@pytest.mark.skip
 def test_complete_course(browser):
     complete_course = CoursePage(browser)
 

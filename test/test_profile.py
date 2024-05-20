@@ -11,7 +11,6 @@ def test_profile(browser):
     profile_page = ProfilePage(browser)
 
     profile_page.open2()
-    #profile_page.login2()
 
     profile_page.p_open_prof_menu()
     profile_page.p_open_profile()

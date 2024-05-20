@@ -43,7 +43,8 @@ v_click_the_note = ()
 v_check_timing = (By.XPATH, '//div[@aria-valuetext="* seconds"]')
 
 t_start_assigment = (By.XPATH, '//button[@data-test="action-button"]')
-t_answer1 = (By.XPATH, '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][1]')
+t_cont = (By.XPATH, '//button[@data-test="continue-button"]')
+t_answer1 = (By.XPATH, '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][1]')
 t_answer2 = (By.XPATH,
              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][4]')
 t_answer3 = (By.XPATH,
@@ -157,6 +158,7 @@ class CoursePage(AuthPage):
 
     @allure.step('Click start quiz')
     def click_start_quiz(self):
+        #self.find(t_cont).click()
         return self.find(t_start_assigment).click()
 
     @allure.step('Answer questions')

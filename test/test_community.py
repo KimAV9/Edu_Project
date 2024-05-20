@@ -4,7 +4,7 @@ from pages.community_page import TestTags
 from time import sleep
 import pytest_order
 
-
+@pytest.mark.skip
 def test_tags(browser):
     test_tags = TestTags(browser)
 

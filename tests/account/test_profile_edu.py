@@ -1,6 +1,6 @@
 import allure
 import pytest
-from pages.porfile_page import ProfilePage
+from pages.profile_page import ProfilePage
 from time import sleep
 import pytest_order
 

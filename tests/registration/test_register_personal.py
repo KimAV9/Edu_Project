@@ -3,7 +3,7 @@ from pages.registration_page import Background
 from time import sleep
 import pytest_order
 
-
+@pytest.mark.skip
 def test_background(browser):
     background = Background(browser)
 

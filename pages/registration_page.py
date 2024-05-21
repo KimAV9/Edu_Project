@@ -2,9 +2,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 import random
-import pyperclip
 from time import sleep
-from keyboard import press
 
 register = (By.XPATH, '//a[@class="standardSignupBtnLink signup-jff-fp-btn link-button primary"]')
 register_fullname = (By.ID, 'name')

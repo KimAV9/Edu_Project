@@ -3,7 +3,6 @@ import allure
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
-from keyboard import press
 
 browser = webdriver.Chrome
 login = (By.XPATH, '//a[text() = "Log In"]')

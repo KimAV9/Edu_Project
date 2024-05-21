@@ -1,3 +1,4 @@
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
 from pages.registration_page import name
@@ -9,9 +10,9 @@ import pytest
 
 e_search_text_area = (By.XPATH, '//input[@class="react-autosuggest__input"]')
 e_click_search = (
-By.XPATH, '//div[@class="browse-content-wrapper horizontal-box"]/descendant::div[@class="magnifier-wrapper"][2]')
+    By.XPATH, '//div[@class="browse-content-wrapper horizontal-box"]/descendant::div[@class="magnifier-wrapper"][2]')
 e_click_course = (
-By.XPATH, '//div[@class="rc-MetatagsWrapper"]/descendant::a[@data-click-key="search.search.click.search_card"][1]')
+    By.XPATH, '//div[@class="rc-MetatagsWrapper"]/descendant::a[@data-click-key="search.search.click.search_card"][1]')
 e_click_continue = (By.XPATH, '//button[text()="Continue"]')
 
 e_enroll = (By.XPATH, '//section/descendant::button[@data-e2e="enroll-button"]')
@@ -52,27 +53,27 @@ t_start_assigment = (By.XPATH, '//button[@data-tests="action-button"]')
 t_cont = (By.XPATH, '//button[@data-tests="continue-button"]')
 t_answer1 = (By.XPATH, '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][1]')
 t_answer2 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][4]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][4]')
 t_answer3 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][7]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][7]')
 t_answer4 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][10]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][10]')
 t_answer5 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][13]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][13]')
 t_answer6 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][19]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][19]')
 t_answer7 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][21]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][21]')
 t_answer8 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][25]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][25]')
 t_answer9 = (By.XPATH,
-             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][28]')
+             '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][28]')
 t_answer10 = (By.XPATH,
-              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][31]')
+              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][31]')
 t_answer11 = (By.XPATH,
-              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][37]')
+              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][37]')
 t_answer12 = (By.XPATH,
-              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][38]')
+              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][38]')
 t_agree_to_terms = (By.XPATH, '//input[@id="agreement-checkbox-base"]')
 t_write_name = (By.XPATH, '//input[@class="css-opa93d"]')
 t_submit = (By.XPATH, '//button[@data-tests="submit-button"]')
@@ -84,6 +85,36 @@ r_open_menu = (By.XPATH, '//button[@data-track-page="my_learning"][1]')
 r_click_rate = (By.XPATH, '//li[@data-e2e="dropdown-option-rate-course"]')
 r_rate_course = (By.XPATH, '//div[@class="rc-CourseRatingIcons rc-CourseRatingIconsAccessible large"]/child::label[6]')
 r_click_submit = (By.XPATH, '//button[@data-e2e="SubmitButton"]')
+
+rt_open_quiz_page = (By.XPATH, '//ul[@data-testid="named-item-list-list"]/descendant::p[@data-test="rc-ItemName"][3]')
+rt_cont = (By.XPATH, '//button[@data-test="continue-button"]')
+rt_try_again = (By.XPATH, '//a[@data-test="action-button"]/child::span[@class="cds-button-label"]')
+rt_is_capable = (By.XPATH, '//div[@class="rc-FormPartsQuestion"]')
+rt_resume = (By.XPATH, '//button[@aria-labelledby="Resume assignment"]')
+
+vid_pause = (By.XPATH, '//button[@class="rc-PlayToggle"]')
+vid_mute = (By.XPATH, '//button[@aria-label="Mute"]')
+vid_mute_on = (By.XPATH, '//video[@muted="muted"]')
+vid_auto_p_on = (By.XPATH, '//button[@aria-label="Autoplay is on"]')
+vid_auto_p_off = (By.XPATH, '//button[@aria-label="Autoplay is off"]')
+vid_subs = (By.ID, 'subtitle-menu-button')
+vid_no_subs = (By.XPATH, '//ul[@id="subtitle-menu"]/descendant::button[1]')
+vid_sub2 = (By.XPATH, '//ul[@id="subtitle-menu"]/descendant::button[2]')
+vid_check_on_subs1 = (By.XPATH,
+                      '//ul[@id="subtitle-menu"]/descendant::button[1]/child::em[@class="cif-lg cif-fw c-subtitles-menu-item-selected-icon css-1oxiizq"]')
+vid_check_on_subs2 = (By.XPATH,
+                      '//ul[@id="subtitle-menu"]/descendant::button[2]/child::em[@class="cif-lg cif-fw c-subtitles-menu-item-selected-icon css-1oxiizq"]')
+vid_check_off_subs1 = (By.XPATH,
+                       '//ul[@id="subtitle-menu"]/descendant::button[1]/child::em[@class="cif-lg cif-fw c-subtitles-menu-item-selected-icon css-10pgxt2"]')
+vid_check_off_subs2 = (By.XPATH,
+                       '//ul[@id="subtitle-menu"]/descendant::button[2]/child::em[@class="cif-lg cif-fw c-subtitles-menu-item-selected-icon css-10pgxt2"]')
+vid_quality = (By.XPATH, '')
+
+vid_playback = (By.XPATH, '')
+vid_playback_1 = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::button[@aria-label][1]')
+vid_playback_2 = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::button[@aria-label][2]')
+vid_playback_current = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::span[@class="playback-rate-text css-4iw9bi"]')
+
 
 class EnrollToCourse(AuthPage):
     def __init__(self, browser):
@@ -117,7 +148,7 @@ class EnrollToCourse(AuthPage):
     def click_continue(self):
         try:
             return self.find(e_click_continue).click()
-        except:
+        except NoSuchElementException:
             return True
 
     @allure.step('Close commitment window')
@@ -141,7 +172,7 @@ class CompleteCourse(AuthPage):
         return self.browser.get('https://www.coursera.org/my-learning?myLearningTab=IN_PROGRESS')
 
     def open_course(self):
-        return self.find(c_op).click()
+        return self.find(c_open_course).click()
 
     @allure.step('Watch introduction to course video')
     def watch_intro(self):
@@ -189,7 +220,7 @@ class CompleteCourse(AuthPage):
 
     @allure.step('Click start quiz')
     def click_start_quiz(self):
-        #self.find(t_cont).click()
+        # self.find(t_cont).click()
         return self.find(t_start_assigment).click()
 
     @allure.step('Answer questions')
@@ -239,6 +270,7 @@ class CourseCompletion(AuthPage):
     def check_course_completion(self):
         return self.find(cc_completion).click()
 
+
 class RateCourse(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
@@ -263,3 +295,66 @@ class RateCourse(AuthPage):
 
     def submit_rating(self):
         return self.find(r_click_submit)
+
+
+class RetakeTest(CompleteCourse):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def temp_open(self):
+        return self.browser.get('https://www.coursera.org/learn/build-free-website-wordpress/home/week/1')
+
+    def open_quiz(self):
+        return self.find(rt_open_quiz_page).click()
+
+    @allure.step('Continue the course')
+    def click_continue(self):
+        try:
+            return self.find(rt_cont).click()
+        except NoSuchElementException:
+            return True
+
+    def click_try_again(self):
+        try:
+            return self.find(rt_try_again).click()
+        except NoSuchElementException:
+            return self.find(rt_resume).click()
+
+    def check_if_capable(self):
+        return self.find(rt_is_capable)
+
+
+class VideoPlayerCheck(CompleteCourse):
+    def __init__(self, browser):
+        super().__init__(browser)
+        self.playback1 = None
+        self.playback2 = None
+        self.playback3 = None
+        self.playback_current = None
+
+    @allure.step('Open main page')
+    def temp_open(self):
+        return self.browser.get(
+            'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
+
+    def click_pause(self):
+        return
+
+    def playback_current_assert(self):
+        return self.find(vid_playback_current)
+
+    def playback_assertion_1(self):
+        return self.find(vid_playback_1)
+
+    def playback_assertion_2(self):
+        return self.find(vid_playback_2)
+
+    def playback_to_text(self):
+        self.playback1 = self.playback_assertion_1()
+        playback1 = self.playback1.get_attribute('aria-label')
+        print(playback1)
+
+    def check_playback(self):
+        playback_current = self.playback_current_assert().text
+        print(playback_current)

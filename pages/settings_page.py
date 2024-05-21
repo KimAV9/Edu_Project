@@ -4,7 +4,6 @@ from selenium import webdriver
 from selenium.common import ElementClickInterceptedException
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
-from keyboard import press
 from time import sleep
 import random
 from pages.registration_page import RandomGenerator

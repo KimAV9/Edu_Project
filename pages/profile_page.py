@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
-from pages.registration_page import password
 import random
 import allure
 from time import sleep

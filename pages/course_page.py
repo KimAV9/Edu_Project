@@ -48,8 +48,8 @@ v_view_all_notes = (By.XPATH, '//div[@aria-labelledby="cds-react-aria-214-tab-NO
 v_click_the_note = ()
 v_check_timing = (By.XPATH, '//div[@aria-valuetext="* seconds"]')
 
-t_start_assigment = (By.XPATH, '//button[@data-test="action-button"]')
-t_cont = (By.XPATH, '//button[@data-test="continue-button"]')
+t_start_assigment = (By.XPATH, '//button[@data-tests="action-button"]')
+t_cont = (By.XPATH, '//button[@data-tests="continue-button"]')
 t_answer1 = (By.XPATH, '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::div[@class="rc-Option"][1]')
 t_answer2 = (By.XPATH,
              '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][4]')
@@ -75,7 +75,7 @@ t_answer12 = (By.XPATH,
               '//div[@id="TUNNELVISIONWRAPPER_CONTENT_ID"]/descendant::span[@class="_1e7axzp"][38]')
 t_agree_to_terms = (By.XPATH, '//input[@id="agreement-checkbox-base"]')
 t_write_name = (By.XPATH, '//input[@class="css-opa93d"]')
-t_submit = (By.XPATH, '//button[@data-test="submit-button"]')
+t_submit = (By.XPATH, '//button[@data-tests="submit-button"]')
 
 cc_completion = (By.XPATH,
                  '//div[@class="rc-LoggedInHome-CourseCards css-53xei8"]/descendant::div[@data-testid="course-main-supplimentary-copy"][1]')

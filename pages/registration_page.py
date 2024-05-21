@@ -1,3 +1,4 @@
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 import random
@@ -17,6 +18,7 @@ forgot_email = (By.XPATH, '//input[@class="css-xvsivy"]')
 reset_password = (By.XPATH, '//button[@class="css-1deqff9"]')
 
 p_w_occupation = (By.ID, 'OccupationsDropdown~workExp')
+p_create_option1 = (By.XPATH, '//div[@role="listbox"]')
 p_click_exp_level = (By.ID, 'current_occupation_level')
 p_choose_exp_level = (By.XPATH, f'//select[@id="current_occupation_level"]/child::option[{random.randint(2, 8)}]')
 p_employer = (By.ID, 'CompanyDropdown~workExp')
@@ -112,27 +114,31 @@ class Background(BasePage):
 
     def write_work_occup(self):
         self.find(p_w_occupation).send_keys(name)
-        return press('enter')
+        return self.find(p_create_option1).click()
+
+
 
     def click_work_exp(self):
         return self.find(p_click_exp_level).click()
 
     def choose_exp(self):
-        return self.find((p_choose_exp_level)).click()
+        return self.find(p_choose_exp_level).click()
 
     def write_employer(self):
         self.find(p_employer).send_keys(name)
-        return press('enter')
+        return self.find(p_create_option1).click()
 
     def click_work_now(self):
         return self.find(p_work_now).click()
 
     def click_degree(self):
         return self.find(p_click_degree).click()
+    def choose_degree(self):
+        return self.find(p_choose_degree).click()
 
     def write_uni(self):
         self.find(p_uni).send_keys(name)
-        return press('enter')
+        return self.find(p_create_option1).click()
 
     def click_field(self):
         return self.find(p_click_field).click()
@@ -144,12 +150,12 @@ class Background(BasePage):
         return self.find(p_now_student).click()
 
     def write_goal_occup(self):
-        self.find(p_cg_occupation)
-        return press('enter')
+        self.find(p_cg_occupation).send_keys(name)
+        return self.find(p_create_option1).click()
 
     def write_industry(self):
-        self.find(p_industry)
-        return press('enter')
+        self.find(p_industry).send_keys(name)
+        return self.find(p_create_option1).click()
 
     def click_cont(self):
-        return self.find(p_continue)
+        return self.find(p_continue).click()

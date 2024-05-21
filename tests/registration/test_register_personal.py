@@ -16,6 +16,7 @@ def test_background(browser):
     background.click_work_now()
 
     background.click_degree()
+    background.choose_degree()
     background.click_field()
     background.choose_field()
     background.click_study_now()

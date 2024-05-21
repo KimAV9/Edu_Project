@@ -13,3 +13,4 @@ def test_register(browser):
     register_page.register_password()
     register_page.register_email()
     register_page.register_button()
+    browser.quit()

@@ -20,3 +20,5 @@ def test_filter(browser):
     filter_check.skills_click()
     filter_check.subs_click()
     filter_check.edu_click()
+
+    browser.quit()

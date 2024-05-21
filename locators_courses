@@ -45,3 +45,24 @@ class Video_player():
     v_volume_mute = (By.XPATH, '//button[@aria-label="Mute"]')
 
 #test = section[@class="forceCommunityHeadline"]/descendant::
+
+    def find_tag(self):
+        #html_content = self.browser.page_source
+        #soup = BeautifulSoup(html_content, 'html.parser')
+        self.find(c_tags_save)
+        return self.find(c_tags_save).text
+
+    def click_tag(self):
+        text1 = self.find_tag()
+        print(text1)
+        self.find(c_click_tag).click()
+
+
+    def find_tag(self):
+        return self.find(c_tags_save)
+
+    def click_tag(self):
+        text1 = self.find_tag().text
+        print(text1)
+
+        //descendant::span[@title][1]/ancestor::li/following-sibling::li[2]

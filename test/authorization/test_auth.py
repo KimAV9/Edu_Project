@@ -14,3 +14,4 @@ def test_auth(browser):
     auth_page.login_email()
     auth_page.login_password()
     auth_page.login_button()
+    browser.quit()

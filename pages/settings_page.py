@@ -9,13 +9,6 @@ from time import sleep
 import random
 from pages.registration_page import RandomGenerator
 
-browser = webdriver.Chrome
-login = (By.XPATH, '//a[text() = "Log In"]')
-login_email = (By.ID, 'email')
-login_password = (By.ID, 'password')
-login_button = (By.XPATH, '//button[@class = "_6dgzsvq css-j6v0dd"]')
-search_button = (By.XPATH, '//input[@class="react-autosuggest__input"]')
-
 c_prof_menu = (By.XPATH, '//button[@data-track-component="profile_drop_down_btn"]')
 c_settings = (By.XPATH, '//div[@class="header-right-nav-wrapper css-1h9ktwj"]/descendant::li[@role="menuitem"][13]')
 
@@ -47,6 +40,16 @@ com_save = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::button[1]
 com_proj_netw = (By.ID, '565')
 com_save2 = (By.XPATH, '//div[@class="rc-EmailPreferences"]/descendant::button[3]')
 
+nh_open = (By.XPATH, '//*[@id="rendered-content"]/descendant::div[@class="cds-MenuListItem-content"][3]')
+nh_allow =(By.XPATH, '//div[@role="switch"]')
+
+
+d_delete_button = (By.XPATH, '//button[@class="secondary cozy settings-primary-action"]')
+d_no_log_in = (By.XPATH, '//div[@class="c-modal-content"]/descendant::label[@class="cds-checkboxAndRadio-label"][1]')
+d_info_removed = (By.XPATH, '//div[@class="c-modal-content"]/descendant::label[@class="cds-checkboxAndRadio-label"][2]')
+d_cert_delete = (By.XPATH, '//div[@class="c-modal-content"]/descendant::label[@class="cds-checkboxAndRadio-label"][3]')
+d_enter_password = (By.XPATH, '//div[@class="c-modal-content"]/descendant::input[@type="password"]')
+d_delete_account = (By.XPATH, '//div[@class="c-modal-content"]/descendant::button[@type="button"][2]')
 
 class AccountSettings(AuthPage):
     def __init__(self, browser):
@@ -172,7 +175,6 @@ class CommunicationPreferences(AuthPage):
             except ElementClickInterceptedException:
                 self.find(com_opt_out).click()
 
-
     @allure.step('Click Weekly notifications about promotions, new courses and programs, and special events')
     def click_notif_promo(self):
         return self.find(com_notif_promo)
@@ -196,3 +198,59 @@ class CommunicationPreferences(AuthPage):
     @allure.step('Save changes')
     def save2(self):
         return self.find(com_save2).click()
+
+
+class NotesAndHighlights(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open account menu')
+    def open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open settings page')
+    def open_settings(self):
+        return self.find(c_settings).click()
+
+    @allure.step('Open Notes&Highlights settings')
+    def open_notes(self):
+        return self.find(nh_open).click()
+
+    @allure.step('Press toggleswitch to allow ot not allow')
+    def pres_switch(self):
+        return self.find(nh_allow).click()
+
+class DeleteAccount(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open account menu')
+    def open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open settings page')
+    def open_settings(self):
+        return self.find(c_settings).click()
+
+    def click_delete_account_button(self):
+        return self.find(d_delete_button)
+    def click_checkbox1(self):
+        return self.find(d_no_log_in)
+    def click_checkbox2(self):
+        return self.find(d_info_removed)
+    def click_checkbox3(self):
+        return self.find(d_cert_delete)
+
+    def enter_password(self):
+        return self.find(d_enter_password).send_keys('KappaKeepoq1w2e3')
+
+    def confirm_delete_account(self):
+        return self.find(d_delete_account)

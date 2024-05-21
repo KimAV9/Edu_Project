@@ -7,28 +7,34 @@ import allure
 from time import sleep
 import pytest
 
-c_search_text_area = (By.XPATH, '//input[@class="react-autosuggest__input"]')
-c_click_search = (By.XPATH, '//div[@class="browse-content-wrapper horizontal-box"]/descendant::div[@class="magnifier-wrapper"][2]')
-c_click_course = (By.XPATH, '//div[@class="rc-MetatagsWrapper"]/descendant::a[@data-click-key="search.search.click.search_card"][1]')
-c_click_continue = (By.XPATH, '//button[text()="Continue"]')
+e_search_text_area = (By.XPATH, '//input[@class="react-autosuggest__input"]')
+e_click_search = (
+By.XPATH, '//div[@class="browse-content-wrapper horizontal-box"]/descendant::div[@class="magnifier-wrapper"][2]')
+e_click_course = (
+By.XPATH, '//div[@class="rc-MetatagsWrapper"]/descendant::a[@data-click-key="search.search.click.search_card"][1]')
+e_click_continue = (By.XPATH, '//button[text()="Continue"]')
 
-c_enroll = (By.XPATH, '//section/descendant::button[@data-e2e="enroll-button"]')
-c_close_entry_window = (By.XPATH, '//div[@class="cds-Modal-container"]/descendant::button[1]')
-c_close_goals_window = (By.XPATH, '//div[@data-track-app="learning_assistant"]/descendant::button[1]')
+e_enroll = (By.XPATH, '//section/descendant::button[@data-e2e="enroll-button"]')
+e_close_entry_window = (By.XPATH, '//div[@class="cds-Modal-container"]/descendant::button[1]')
+e_close_goals_window = (By.XPATH, '//div[@data-track-app="learning_assistant"]/descendant::button[1]')
 
+c_open_course = (By.XPATH, '//div[@class="rc-LoggedInHome-CourseCards css-53xei8"]/descendant::a[1]')
 c_click_watch_intro = (By.XPATH, '//div[@class="rc-ModuleLessons"]/descendant::div[@role="presentation"][1]')
 c_mark_complete = (By.XPATH, '//button[@data-testid="mark-complete"]')
-c_read_project_overview = (By.XPATH, '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][2]')
-c_read_comm_disc = (By.XPATH, '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][3]')
-c_click_lab = (By.XPATH, '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][4]')
-c_click_quiz = (By.XPATH, '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][5]')
-c_click_survey = (By.XPATH, '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][6]')
-
+c_read_project_overview = (By.XPATH,
+                           '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][2]')
+c_read_comm_disc = (By.XPATH,
+                    '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][3]')
+c_click_lab = (By.XPATH,
+               '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][4]')
+c_click_quiz = (By.XPATH,
+                '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][5]')
+c_click_survey = (By.XPATH,
+                  '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][6]')
 
 c_open_lab = (By.XPATH, '//main[@id="main"]//descendant::button[@data-track-app="open_course_home"]')
 c_how_want_to_learn_open = (By.XPATH, '//div/descendant::button[@aria-describedby="byob-mode-description"][1]')
 c_lab_instructions_close = (By.XPATH, '//section[@aria-label="Instructions"]/descendant::button[1]')
-
 
 v_autoplay = (By.XPATH, '//button[@aria-label="Autoplay is on"]')
 v_pause = (By.XPATH, '//button[@aria-label="Pause"]')
@@ -71,8 +77,15 @@ t_agree_to_terms = (By.XPATH, '//input[@id="agreement-checkbox-base"]')
 t_write_name = (By.XPATH, '//input[@class="css-opa93d"]')
 t_submit = (By.XPATH, '//button[@data-test="submit-button"]')
 
+cc_completion = (By.XPATH,
+                 '//div[@class="rc-LoggedInHome-CourseCards css-53xei8"]/descendant::div[@data-testid="course-main-supplimentary-copy"][1]')
 
-class CoursePage(AuthPage):
+r_open_menu = (By.XPATH, '//button[@data-track-page="my_learning"][1]')
+r_click_rate = (By.XPATH, '//li[@data-e2e="dropdown-option-rate-course"]')
+r_rate_course = (By.XPATH, '//div[@class="rc-CourseRatingIcons rc-CourseRatingIconsAccessible large"]/child::label[6]')
+r_click_submit = (By.XPATH, '//button[@data-e2e="SubmitButton"]')
+
+class EnrollToCourse(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
 
@@ -82,15 +95,15 @@ class CoursePage(AuthPage):
 
     @allure.step('Enter text')
     def search_course(self):
-        return self.find(c_search_text_area).send_keys('Business Analysis & Process Management')
+        return self.find(e_search_text_area).send_keys('Business Analysis & Process Management')
 
     @allure.step('Click search')
     def click_search(self):
-        return self.find(c_click_search).click()
+        return self.find(e_click_search).click()
 
     @allure.step('Click Course')
     def click_course(self):
-        return self.find(c_click_course).click()
+        return self.find(e_click_course).click()
 
     @allure.step('Enroll to course')
     def enroll(self):
@@ -98,19 +111,37 @@ class CoursePage(AuthPage):
         self.browser.switch_to.window(focus_window[0])
         self.browser.close()
         self.browser.switch_to.window(focus_window[-1])
-        return self.find(c_enroll).click()
+        return self.find(e_enroll).click()
 
     @allure.step('Continue the course')
     def click_continue(self):
-        return self.find(c_click_continue).click()
+        try:
+            return self.find(e_click_continue).click()
+        except:
+            return True
 
     @allure.step('Close commitment window')
     def close_commit_window(self):
-        return self.find(c_close_entry_window).click()
+        try:
+            return self.find(e_close_entry_window).click()
+        except:
+            return True
 
     @allure.step('Close goals window')
     def close_goals_window(self):
-        return self.find(c_close_goals_window).click()
+        return self.find(e_close_goals_window).click()
+
+
+class CompleteCourse(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open(self):
+        return self.browser.get('https://www.coursera.org/my-learning?myLearningTab=IN_PROGRESS')
+
+    def open_course(self):
+        return self.find(c_op).click()
 
     @allure.step('Watch introduction to course video')
     def watch_intro(self):
@@ -196,3 +227,39 @@ class CoursePage(AuthPage):
     def click_completed_survey(self):
         return self.find(c_mark_complete).click()
 
+
+class CourseCompletion(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open(self):
+        return self.browser.get('https://www.coursera.org/my-learning?myLearningTab=COMPLETED')
+
+    def check_course_completion(self):
+        return self.find(cc_completion).click()
+
+class RateCourse(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open(self):
+        try:
+            self.browser.get('https://www.coursera.org/my-learning?myLearningTab=COMPLETED')
+            self.find(r_open_menu)
+        except AssertionError:
+            self.browser.get('https://www.coursera.org/my-learning?myLearningTab=IN_PROGRESS')
+            self.find(r_open_menu)
+
+    def open_menu(self):
+        return self.find(r_open_menu).click()
+
+    def click_rate(self):
+        return self.find(r_click_rate).click()
+
+    def rate_course(self):
+        return self.find(r_rate_course)
+
+    def submit_rating(self):
+        return self.find(r_click_submit)

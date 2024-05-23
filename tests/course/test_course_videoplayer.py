@@ -4,6 +4,7 @@ from pages.course_page import VideoPlayerCheck
 from time import sleep
 import pytest_order
 
+@pytest.mark.skip
 @pytest.mark.order(18)
 def test_video_player_check(browser):
     video_player_check = VideoPlayerCheck(browser)

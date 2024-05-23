@@ -7,6 +7,7 @@ import pytest_order
 
 @allure.story('Authentication check')
 @pytest.mark.skip
+@pytest.mark.order(0)
 def test_auth(browser):
     auth_page = AuthPage(browser)
     auth_page.open()

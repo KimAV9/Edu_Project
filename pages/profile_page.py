@@ -89,9 +89,9 @@ wp_delete_role = (By.XPATH, '//button[@data-testid="delete-role-preference-butto
 wp_create_item = (By.XPATH, '//button[@class ="cds-149 cds-button-disableElevation cds-button-ghost css-1dab2db"]')
 
 wp_add_role = (By.XPATH, '//div[@data-e2e="profile_edit_role"]/descendant::*[@class="css-1sifyul"][1]')
-wp_choose_role = (By.XPATH, '//div[@class="css-1vxrzat"]/descendant::div[3]')
+wp_choose_role = (By.XPATH, '//div[@role="listbox"]/descendant::li[3]')
 wp_add_industry = (By.XPATH, '//div[@data-e2e="profile_edit_role"]/descendant::*[@class="css-1sifyul"][2]')
-wp_choose_industry = (By.XPATH, '//div[@class="css-1vxrzat"]/descendant::div[3]')
+wp_choose_industry = (By.XPATH, '//div[@role="listbox"]/descendant::li[3]')
 wp_add_another_role = (By.XPATH, '//button[@data-track-component="profile_add_work_preferences_role"]')
 
 wp_save = (By.XPATH, '//button[@data-track-component="profile_save_work_preferences"]')

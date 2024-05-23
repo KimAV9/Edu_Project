@@ -6,7 +6,7 @@ import pytest_order
 
 @allure.story('Delte account in settings')
 @pytest.mark.skip
-@pytest.mark.order(27)
+@pytest.mark.order(28)
 def test_delete_account(browser):
     delete_account = DeleteAccount(browser)
 

@@ -229,6 +229,10 @@ class CompleteCourse(AuthPage):
 
     @allure.step('Click lab page')
     def click_lab(self):
+        og_window = self.browser.current_window_handle
+        focus_window = self.browser.window_handles
+        self.browser.close(og_window)
+        self.browser.switch_to.window(focus_window[0])
         return self.find(c_click_lab).click()
 
     @allure.step('Click open lab')
@@ -240,7 +244,7 @@ class CompleteCourse(AuthPage):
         focus_window = self.browser.window_handles
         self.browser.switch_to.window(focus_window[1])
         self.find(c_how_want_to_learn_open).click()
-        self.browser.switch_to.window(focus_window[-1])
+        self.browser.switch_to.window(focus_window[2])
         self.browser.close()
         self.browser.switch_to.window(focus_window[1])
         self.browser.close()

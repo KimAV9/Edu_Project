@@ -72,4 +72,3 @@ class FilterCheck(AuthPage):
     @allure.step('Choose educator')
     def edu_click(self):
         return self.find(c_edu).click()
-

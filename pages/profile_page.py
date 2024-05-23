@@ -5,16 +5,16 @@ import random
 import allure
 from time import sleep
 
-
 c_prof_menu = (By.XPATH, '//button[@data-track-component="profile_drop_down_btn"]')
 c_profile = (By.XPATH, '//div[@class="header-right-nav-wrapper css-1h9ktwj"]/descendant::li[@role="menuitem"][11]')
 
 text = ('Groovy')
-#text = RandomGenerator.generate_text()
+# text = RandomGenerator.generate_text()
 x = random.randint(2, 12)
 y = x - 1
 
-w_add_work_exp = (By.XPATH, '//div[@class="cds-9 css-dv86ch cds-10 cds-18 cds-29"]/descendant::button[@class ="cds-149 cds-button-disableElevation cds-button-secondary css-1pddt1l"]')
+w_add_work_exp = (By.XPATH,
+                  '//div[@class="cds-9 css-dv86ch cds-10 cds-18 cds-29"]/descendant::button[@class ="cds-149 cds-button-disableElevation cds-button-secondary css-1pddt1l"]')
 
 w_name_of_inst = (By.XPATH, '//span[@class="fs-mask"]/descendant::button[@class="css-1sifyul"]')
 w_add_name_of_inst = (By.XPATH, '//div[@class="menu-item-inactive css-1bol722"][1]')
@@ -55,10 +55,12 @@ e_name_of_inst = (By.XPATH, '//button[@class="css-1sifyul"]')
 e_add_name_of_inst = (By.XPATH, f'//div[@class="menu-item-inactive css-1bol722"][{random.randint(1, 10)}]')
 
 e_degree = (By.XPATH, '//div[@data-e2e= "profile-education-degree"]')
-e_add_degree = (By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(3, 7)}]')
+e_add_degree = (
+By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(3, 7)}]')
 
 e_discipline = (By.XPATH, '//div[@data-e2e="profile-education-discipline"]')
-e_add_discipline = (By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(1, 12)}]')
+e_add_discipline = (
+By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(1, 12)}]')
 e_area_of_conc = (By.XPATH, '//div[@data-track-app="account_profile"]/descendant::input[3]')
 
 e_start_month = (By.XPATH, '//div[@data-e2e= "profile-education-start-date"]/descendant::div[@data-e2e="date-month"]')
@@ -73,18 +75,20 @@ e_add_end_month = (By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-se
 e_end_year = (By.XPATH, '//div[@data-e2e= "profile-education-end-date"]/descendant::div[@data-e2e="date-year"]')
 e_add_end_year = (By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{x}]')
 
-e_currently_study =(By.XPATH, '//label[@class="cds-checkboxAndRadio-label"]')
+e_currently_study = (By.XPATH, '//label[@class="cds-checkboxAndRadio-label"]')
 e_grade = (By.XPATH, '//div[@data-track-app="account_profile"]/descendant::input[9]')
 
 e_save = (By.XPATH, '//button[@data-track-component="profile_save_education_history"]')
 
-i_add = (By.XPATH, '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_add_additional_info"]')
+i_add = (By.XPATH,
+         '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_add_additional_info"]')
 i_about = (By.XPATH, '//div[@data-track-app="account_profile"]/descendant::textarea[1]')
 i_save = (By.XPATH, '//button[@data-track-component="profile_additional_info_save"]')
 
 wp_dropdown_menu = (By.XPATH, '/*[name()="svg" and @data-testid = "icon-not-active"]')  # still udner work
 
-wp_add_work_pref = (By.XPATH, '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_add_work_preferences"]')
+wp_add_work_pref = (By.XPATH,
+                    '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_add_work_preferences"]')
 wp_delete_role = (By.XPATH, '//button[@data-testid="delete-role-preference-button"]')
 wp_create_item = (By.XPATH, '//button[@class ="cds-149 cds-button-disableElevation cds-button-ghost css-1dab2db"]')
 
@@ -102,7 +106,8 @@ wp_add_industry2 = ''
 v_share_link = (By.XPATH, '//section[@data-e2e="profile-photo-and-invitation-section"]/descendant::button[3]')
 v_copy_link = (By.XPATH, '//div[@data-track-component="profile_share_public_profile_dialog"]/descendant::button[1]')
 
-v_customize_link = (By.XPATH, '//div[@data-track-component="profile_share_public_profile_dialog"]/descendant::button[2]')
+v_customize_link = (
+By.XPATH, '//div[@data-track-component="profile_share_public_profile_dialog"]/descendant::button[2]')
 v_enter_customization = (By.XPATH, '//input[@aria-label="Profile Link"]')
 v_save_custom = (By.XPATH, '//button[@class="cds-149 cds-button-disableElevation cds-button-primary css-ra3hwj"]')
 v_cancel_custom = (By.XPATH,
@@ -121,14 +126,16 @@ ed_edit_gender = (By.XPATH, '//div[@data-e2e="profile_edit_gender"]')
 ed_choose_gender = (By.XPATH, '//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][2]')
 ed_save = (By.XPATH, '//button[@data-track-component="profile_save_intro_profile"]')
 
-
 dl_wk_history_edit = (By.XPATH, '//button[@data-track-component="profile_edit_work_history"]')
 dl_edu_edit = (By.XPATH, '//button[@data-track-component="profile_edit_education_history"]')
-dl_wk_pref_edit = (By.XPATH, '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_edit_work_preferences"]')
+dl_wk_pref_edit = (By.XPATH,
+                   '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_edit_work_preferences"]')
 dl_remove_wk_epx = (By.XPATH, '//button[@data-track-component="profile_remove_work_history"]')
 dl_remove_edu = (By.XPATH, '//button[@data-track-component="profile_remove_education_history"]')
 dl_remove_wk_pref = (By.XPATH, '//button[@data-testid="delete-role-preference-button"]')
 dl_save_wk_pre = (By.XPATH, '//button[@data-track-component="profile_save_work_preferences"]')
+
+
 class ProfilePage(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
@@ -370,6 +377,7 @@ class ProfilePage(AuthPage):
     def ed2_save(self):
         return self.find(ed_save).click()
 
+
 class ProfilePageDeleteData(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
@@ -377,6 +385,7 @@ class ProfilePageDeleteData(AuthPage):
     @allure.step('Open main page')
     def open2(self):
         return self.main_page()
+
     @allure.step('Open account menu')
     def p_open_prof_menu(self):
         return self.find(c_prof_menu).click()

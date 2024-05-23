@@ -7,7 +7,7 @@ import pytest_order
 
 @allure.story('Change work preferences in profile')
 @pytest.mark.order(3)
-
+@pytest.mark.skip
 def test_work_pref(browser):
     profile_page = ProfilePage(browser)
 

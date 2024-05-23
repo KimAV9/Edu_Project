@@ -4,7 +4,7 @@ import pytest
 import pytest_order
 
 
-
+@pytest.mark.order(26)
 @pytest.mark.skip
 def test_check_updts(browser):
     check_updts = CheckUpdates(browser)

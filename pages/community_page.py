@@ -55,25 +55,32 @@ class TagsTesting(BasePage):
         super().__init__(browser)
         self.tag_click = None
 
+    @allure.step('Open community page')
     def open_page(self):
         return self.browser.get(c_community)
 
+    @allure.step('Open Featured')
     def click_featured(self):
         return self.find(c_featured).click()
 
+    @allure.step('Find and save tag')
     def find_tag(self):
         return self.find(c_tags_save)
 
+    @allure.step('Click on one of tags')
     def check_tag_to_click(self):
         self.tag_click = self.find_tag().text
         return self.tag_click
 
+    @allure.step('Click on saved tag')
     def click_tag(self):
         return self.find(c_click_tag).click()
 
+    @allure.step('Find tag in discussion')
     def find_disc_tags(self):
         return self.find(c_check_tags_after_search)
 
+    @allure.step('Check if found tags match')
     def check_tags(self):
         tag_check1 = self.find_disc_tags().text
         while True:
@@ -90,41 +97,54 @@ class AskQuestion(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
 
+    @allure.step('Open community page')
     def open_page(self):
         return self.browser.get(c_community)
 
+    @allure.step('Open Featured')
     def click_featured(self):
         return self.find(c_featured).click()
 
+    @allure.step('Click on write question')
     def click_question(self):
         return self.find(aq_click_question).click()
 
+    @allure.step('Write question')
     def write_question(self):
         return self.find(aq_question_text_area).send_keys(text)
 
+    @allure.step('Turn on bold text')
     def make_bold(self):
         return self.find(aq_click_bold).click()
 
+    @allure.step('Turn on italics text')
     def make_italic(self):
         return self.find(aq_click_italic).click()
 
+    @allure.step('Turn on strikethrough text')
     def make_strikethrough(self):
         return self.find(aq_click_strikethrough).click()
 
+    @allure.step('Turn on underline text')
     def make_underline(self):
         return self.find(aq_click_underline).click()
 
+    @allure.step('Turn on bulletin list')
     def make_bulletin_list(self):
         return self.find(aq_click_bulleted_list).click()
 
+    @allure.step('Write details')
     def write_details(self):
         return self.find(aq_details_text_area).send_keys('asd')
 
+    @allure.step('Open emoji menu')
     def click_emoji_menu(self):
         return self.find(aq_click_emoji).click()
 
+    @allure.step('Choose Emoji')
     def choose_emoji(self):
         return self.find(aq_choose_emoji).click()
 
+    @allure.step('Check if text is corresponding to conditions')
     def check_text(self):
         return self.find(aq_check_text).click()

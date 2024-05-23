@@ -5,6 +5,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(16)
 def test_add_thoughts(browser):
     add_thoughts = AddThoughts(browser)
 

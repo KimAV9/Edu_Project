@@ -1,4 +1,5 @@
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, ElementClickInterceptedException
+from selenium.webdriver.common import actions
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
 from pages.registration_page import name
@@ -6,6 +7,7 @@ from pages.base_page import BasePage
 import random
 import allure
 from time import sleep
+from selenium.webdriver import ActionChains, Keys
 import pytest
 
 e_search_text_area = (By.XPATH, '//input[@class="react-autosuggest__input"]')
@@ -92,11 +94,16 @@ rt_try_again = (By.XPATH, '//a[@data-test="action-button"]/child::span[@class="c
 rt_is_capable = (By.XPATH, '//div[@class="rc-FormPartsQuestion"]')
 rt_resume = (By.XPATH, '//button[@aria-labelledby="Resume assignment"]')
 
+vid_hover = (By.XPATH, '')
 vid_pause = (By.XPATH, '//button[@class="rc-PlayToggle"]')
+vid_play_off = (By.XPATH, '//div[@class="rc-VideoControlsContainer css-2lj8po"]/descendant::span[text()="Pause"]')
+
 vid_mute = (By.XPATH, '//button[@aria-label="Mute"]')
 vid_mute_on = (By.XPATH, '//video[@muted="muted"]')
+
 vid_auto_p_on = (By.XPATH, '//button[@aria-label="Autoplay is on"]')
 vid_auto_p_off = (By.XPATH, '//button[@aria-label="Autoplay is off"]')
+
 vid_subs = (By.ID, 'subtitle-menu-button')
 vid_no_subs = (By.XPATH, '//ul[@id="subtitle-menu"]/descendant::button[1]')
 vid_sub2 = (By.XPATH, '//ul[@id="subtitle-menu"]/descendant::button[2]')
@@ -116,17 +123,21 @@ vid_quality = (By.XPATH, '')
 vid_playback = (By.XPATH, '')
 vid_playback_1 = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::button[@aria-label][1]')
 vid_playback_2 = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::button[@aria-label][2]')
-vid_playback_current = (
-    By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::span[@class="playback-rate-text css-4iw9bi"]')
+
+
+vid_quality_1 = (By.XPATH, '//div[@class="rc-ResolutionChangeSection"]/descendant::button[@aria-label][1]')
+vid_quality_2 = (By.XPATH, '//div[@class="rc-ResolutionChangeSection"]/descendant::button[@aria-label][2]')
+
 
 nt_save_note = (By.XPATH, '//button[@data-track-component="create_video_highlight"]')
 nt_course_home_page = (
-By.XPATH, '//nav[@aria-label="Primary breadcrumb"]/descendant::li[@class="cds-breadcrumbs-listItem"][1]')
+    By.XPATH, '//nav[@aria-label="Primary breadcrumb"]/descendant::li[@class="cds-breadcrumbs-listItem"][1]')
 nt_notes = (By.XPATH, '//li[@data-e2e="notesNavigationItem"]')
 nt_saved_note = (By.XPATH, '//main[@id="main"]/descendant::div[@data-e2e="snapshot-container"][1]')
 nt_timing_notes_video = (By.XPATH, '//div[@role="tabpanel"]/descendant::button[@aria-label][1]')
 nt_timing_notes_save = (By.XPATH, '//p[@aria-label="Duration"]')
-nt_timing_video = (By.XPATH, '//div[@class="rc-VideoTimeDisplay horizontal-box align-items-absolute-center"]/child::span[@class="current-time-display"]]')
+nt_timing_video = (By.XPATH,
+                   '//div[@class="rc-VideoTimeDisplay horizontal-box align-items-absolute-center"]/child::span[@class="current-time-display"]]')
 nt_notes_video = (By.XPATH, '//div[@aria-label="Related lecture content tabs"]/descendant::button[2]')
 
 nt_thgts_edit_notes = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[1]')
@@ -136,6 +147,7 @@ nt_thgts_check = (By.XPATH, '//p[@data-e2e="video-note-text"]')
 
 nt_delete_note = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[2]')
 nt_confirm_delete = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[1]')
+
 
 class EnrollToCourse(AuthPage):
     def __init__(self, browser):
@@ -353,25 +365,77 @@ class VideoPlayerCheck(AuthPage):
         self.playback2 = None
         self.quality1 = None
         self.quality2 = None
-        self.quality_current = None
 
     @allure.step('Open main page')
     def temp_open(self):
         return self.browser.get(
             'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
 
-    def click_pause(self):
-        return
+    @allure.step('Hover over player to show buttons')
+    def hover(self):
+        return self.browser.moveToElement(vid_hover).perform()
 
+    @allure.step('Pause video')
+    def click_pause(self):
+        self.find(vid_pause).click()
+        try:
+            if self.find(vid_play_off):
+                self.find(vid_pause).click()
+        except NoSuchElementException:
+            return True
+
+    @allure.step('Mute video')
+    def click_mute(self):
+        self.find(vid_mute).click()
+        if self.find(vid_mute_on):
+            return True
+        else:
+            self.find(vid_mute).click()
+            self.find(vid_mute).click()
+
+    @allure.step('Click autoplay')
+    def click_autoplay(self):
+        sleep(2)
+        try:
+            if self.find(vid_auto_p_on):
+                self.find(vid_mute_on).click()
+            elif self.find(vid_play_off):
+                self.find(vid_play_off).click()
+        except ElementClickInterceptedException:
+            return True
+
+    @allure.step('Open settings meny')
     def click_settings(self):
         return self.find(vid_settings).click()
 
+    @allure.step('Open subtitles menu')
+    def click_subs(self):
+        return self.find(vid_subs).click()
+
+    @allure.step('Turn off subtitles')
+    def turn_off_subs(self):
+        return self.find(vid_no_subs).click()
+
+    @allure.step('Turn on first available subtitles')
+    def turn_on_subs1(self):
+        return self.find(vid_sub2).click()
+
+    @allure.step('Check subtitles')
+    def check_subs(self):
+        try:
+            self.find(vid_check_on_subs1)
+        except NoSuchElementException:
+            return self.find(vid_check_on_subs2)
+
+    @allure.step('Find playback to lower it')
     def playback_assertion_1(self):
         return self.find(vid_playback_1)
 
+    @allure.step('Find playback to increase it')
     def playback_assertion_2(self):
         return self.find(vid_playback_2)
 
+    @allure.step('Change playback options')
     def playback_to_click_check(self):
         self.playback1 = self.playback_assertion_1()
         playback1 = self.playback1.get_attribute('aria-label')
@@ -382,55 +446,32 @@ class VideoPlayerCheck(AuthPage):
         if playback1 == 'decrease playback rate to 0.75' and playback2 == 'increase playback rate to 1.25':
             self.find(vid_playback_1).click()
             print(playback1)
-            if playback2 == 'increase playback rate to 1':
-                print('hahah3')
         elif playback2 == ('increase playback rate to 1'):
             self.find(vid_playback_2).click()
             print(playback2)
-            if playback2 == 'increase playback rate to 1.25':
-                print('hahah4')
 
-    def playback_check_a(self):
-        return self.find(vid_playback_1)
-
-    def playback_check_b(self):
-        return self.find(vid_playback_2)
-
-    def playback_check(self):
-        self.playback_check1 = self.playback_check_a()
-        playback_check1 = self.playback_check1.get_attribute('aria-label')
-        self.playback_check2 = self.playback_check_b()
-        playback_check2 = self.playback_check2.get_attribute('aria-label')
-        if playback_check1 == ('increase playback rate to 1'):
-            self.find(vid_playback_2).click()
-            print(playback_check1)
-        elif playback_check2 == ('increase playback rate to 1.25'):
-            self.find(vid_playback_1).click()
-            print(playback_check2)
-        elif playback_check2 != ('w'):
-            return False
-
+    @allure.step('Find quality to lower it')
     def quality_assertion_1(self):
-        return self.find(vid_playback_1)
+        return self.find(vid_quality_1)
 
+    @allure.step('Find quality to increase it')
     def quality_assertion_2(self):
-        return self.find(vid_playback_2)
+        return self.find(vid_quality_2)
 
+    @allure.step('Change quality options')
     def quality_to_assert(self):
-        self.quality1 = self.playback_assertion_1()
-        quality1 = self.quality2.get_attribute('aria-label')
-        self.quality2 = self.playback_assertion_2()
+        self.quality1 = self.quality_assertion_1()
+        quality1 = self.quality1.get_attribute('aria-label')
+        self.quality2 = self.quality_assertion_2()
         quality2 = self.quality2.get_attribute('aria-label')
-        if quality1 == ('decrease playback rate to 0.75') and quality2 == ('increase playback rate to 1.25'):
+        print(quality1)
+        print(quality2)
+        if quality1 == 'decrease video quality to 240p' and quality2 == 'increase video quality to 540p':
             self.find(vid_playback_1).click()
-        else:
+            print(quality1)
+        elif quality2 == 'increase video quality to 720p':
             self.find(vid_playback_2).click()
-
-    def quality_check(self):
-        if self.quality1 == ('increase playback rate to 1'):
-            print(self.playback2)
-        elif self.quality2 == ('increase playback rate to 1.25'):
-            print(self.playback2)
+            print(quality2)
 
 
 class SavingNotesCheck(AuthPage):
@@ -445,29 +486,37 @@ class SavingNotesCheck(AuthPage):
         return self.browser.get(
             'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
 
+    @allure.step('Save a note on the video')
     def click_save_note(self):
         return self.find(nt_save_note).click()
 
+    @allure.step('Check timings of the video')
     def check_video_notes_timing(self):
         return self.find(nt_timing_notes_video)
 
+    @allure.step('Save the timing')
     def save_video_notes_timing(self):
         self.timing_vid_nt = self.check_video_notes_timing()
         return self.timing_vid_nt
 
+    @allure.step('Open course main page')
     def click_course_homepage(self):
         return self.find(nt_course_home_page).click()
 
+    @allure.step('Open notes')
     def click_notes(self):
         return self.find(nt_notes).click()
 
+    @allure.step('Check timing in the notes')
     def check_saved_notes_timing(self):
         return self.find(nt_timing_notes_save)
 
+    @allure.step('Save timing in the notes')
     def save_notes_saved_timing(self):
         self.timing_nt_save = self.check_saved_notes_timing()
         return self.timing_nt_save
 
+    @allure.step('Open created note')
     def open_note(self):
         self.find(nt_saved_note).click()
 
@@ -476,19 +525,23 @@ class SavingNotesCheck(AuthPage):
         self.browser.switch_to.window(focus_window[1])
         return self.find(nt_notes_video).click()
 
+    @allure.step('Check opened timing in the notes')
     def check_video_timing(self):
         return self.find(nt_timing_video)
 
+    @allure.step('Save video timing')
     def save_video_timing(self):
         self.timing_vid = self.check_video_timing()
         return self.timing_vid
 
+    @allure.step('Check if saved timings of the note correspond to the one opened')
     def timing_check(self):
         timing_vid_nt = self.timing_vid_nt().get_attribute('@aria-label')
         timing_nt_save = self.timing_nt_save.text
         timing_vid = self.timing_vid.text
 
         print(timing_vid, timing_vid_nt, timing_nt_save)
+
 
 class DeleteNotes(AuthPage):
     def __init__(self, browser):
@@ -502,18 +555,23 @@ class DeleteNotes(AuthPage):
         return self.browser.get(
             'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
 
+    @allure.step('Save a note')
     def click_save_note(self):
         return self.find(nt_save_note).click()
 
+    @allure.step('Open course main page')
     def click_course_homepage(self):
         return self.find(nt_course_home_page).click()
 
+    @allure.step('Open notes')
     def click_notes(self):
         return self.find(nt_notes).click()
 
+    @allure.step('Click delete note')
     def click_delete(self):
         return self.find(nt_delete_note).click()
 
+    @allure.step('Confirm deletion')
     def click_confirm_delete(self):
         return self.find(nt_confirm_delete).click()
 
@@ -527,25 +585,30 @@ class AddThoughts(AuthPage):
         return self.browser.get(
             'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
 
+    @allure.step('Create a note')
     def click_save_note(self):
         return self.find(nt_save_note).click()
 
+    @allure.step('Open course main page')
     def click_course_homepage(self):
         return self.find(nt_course_home_page).click()
 
+    @allure.step('Open notes')
     def click_notes(self):
         return self.find(nt_notes).click()
 
+    @allure.step('Open textbox to add description to the note')
     def click_edit_thoughts(self):
         return self.find(nt_thgts_edit_notes).click()
 
+    @allure.step('Add description to the note')
     def add_thoughts(self):
         return self.find(nt_thgts_write).send_keys("asd")
+
+    @allure.step('Save description')
     def save_thoughts(self):
         return self.find(nt_thgts_save).click()
+
+    @allure.step('Check the description')
     def check_added_thoughts(self):
         return self.find(nt_thgts_check)
-
-
-
-

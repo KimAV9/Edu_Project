@@ -5,6 +5,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(20)
 def test_complete_course(browser):
     complete_course = CompleteCourse(browser)
 

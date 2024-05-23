@@ -5,6 +5,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(17)
 def test_delete_notes(browser):
     delete_notes = DeleteNotes(browser)
 

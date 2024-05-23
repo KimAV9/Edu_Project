@@ -4,6 +4,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(0)
 def test_register(browser):
     register_page = RegistrationPage(browser)
     register_page.open_page()

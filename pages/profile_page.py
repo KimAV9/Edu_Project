@@ -385,42 +385,49 @@ class ProfilePageDeleteData(AuthPage):
     def p_open_profile(self):
         return self.find(c_profile).click()
 
+    @allure.step('Open existing work experience')
     def click_edit_work_exp(self):
         try:
             return self.find(dl_wk_history_edit).click()
         except NoSuchElementException:
             return True
 
+    @allure.step('Delete existing work experience')
     def remove_work_exp(self):
         try:
             return self.find(dl_remove_wk_epx).click()
         except NoSuchElementException:
             return True
 
+    @allure.step('Open existing education')
     def click_edit_edu(self):
         try:
             return self.find(dl_edu_edit).click()
         except NoSuchElementException:
             return True
 
+    @allure.step('Remove existing education')
     def remove_edu(self):
         try:
             return self.find(dl_remove_edu).click()
         except NoSuchElementException:
             return True
 
+    @allure.step('Open existing work preferences')
     def click_edit_wk_pref(self):
         try:
             return self.find(dl_wk_pref_edit).click()
         except NoSuchElementException:
             return True
 
+    @allure.step('Remove existing work preferences')
     def remove_wk_pref(self):
         try:
             return self.find(dl_remove_wk_pref).click()
         except NoSuchElementException:
             return True
 
+    @allure.step('Save removal of work preferences')
     def save_wk_pref(self):
         try:
             return self.find(dl_save_wk_pre).click()

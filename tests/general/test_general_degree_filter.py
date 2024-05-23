@@ -6,6 +6,7 @@ import pytest_order
 
 
 @pytest.mark.skip
+@pytest.mark.order(24)
 def test_degree_filter_program_lvl(browser):
     degree_filter_program_lvl = DegreeFilterProgramLvl(browser)
 

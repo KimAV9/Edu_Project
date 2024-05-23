@@ -4,6 +4,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(27)
 def test_background(browser):
     background = Background(browser)
 

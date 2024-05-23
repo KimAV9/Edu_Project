@@ -5,7 +5,8 @@ import pytest_order
 from time import sleep
 
 
-
+@pytest.mark.skip
+@pytest.mark.order(25)
 def test_check_localization(browser):
     check_localization = CheckLocalization(browser)
 

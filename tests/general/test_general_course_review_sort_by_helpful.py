@@ -6,11 +6,13 @@ from time import sleep
 
 
 @pytest.mark.skip
+@pytest.mark.order(23)
 def test_check_reviews_sort_hlp(browser):
     check_reviews_sort_hlp = CheckReviewSort(browser)
 
     check_reviews_sort_hlp.temp_open()
-    check_reviews_sort_hlp.click_more_reviews()
+    check_reviews_sort_hlp.more_reviews()
+    check_reviews_sort_hlp.click_more_reviews2()
     check_reviews_sort_hlp.assert_review1()
     check_reviews_sort_hlp.assert_review2()
     sleep(5)

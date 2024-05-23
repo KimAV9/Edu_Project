@@ -5,6 +5,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(19)
 def test_retake_test(browser):
     retake_test = RetakeTest(browser)
 

@@ -239,17 +239,26 @@ class DeleteAccount(AuthPage):
     def open_settings(self):
         return self.find(c_settings).click()
 
+    @allure.step('Click delete account')
     def click_delete_account_button(self):
         return self.find(d_delete_button)
+
+    @allure.step('Confirm first checkbox')
     def click_checkbox1(self):
         return self.find(d_no_log_in)
+
+    @allure.step('Confirm seconds checkbox')
     def click_checkbox2(self):
         return self.find(d_info_removed)
+
+    @allure.step('Confirm third checkbox')
     def click_checkbox3(self):
         return self.find(d_cert_delete)
 
+    @allure.step('Write password')
     def enter_password(self):
         return self.find(d_enter_password).send_keys('KappaKeepoq1w2e3')
 
+    @allure.step('Confirm account deletion')
     def confirm_delete_account(self):
         return self.find(d_delete_account)

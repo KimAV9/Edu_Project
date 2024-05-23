@@ -6,6 +6,7 @@ import pytest_order
 
 @allure.story('Change password in settings')
 @pytest.mark.skip
+@pytest.mark.order()
 def test_password(browser):
     password_change = PasswordChange(browser)
 

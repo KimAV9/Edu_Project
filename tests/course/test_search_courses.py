@@ -4,6 +4,7 @@ from time import sleep
 
 
 @pytest.mark.skip
+@pytest.mark.order(13)
 def test_filter(browser):
     filter_check = FilterCheck(browser)
 

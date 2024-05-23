@@ -5,6 +5,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(14)
 def test_enroll_to_course(browser):
     enroll_to_course = EnrollToCourse(browser)
 

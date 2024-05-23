@@ -5,6 +5,7 @@ import pytest_order
 
 
 @allure.story('Change communication preferences in settings')
+@pytest.mark.order(9)
 @pytest.mark.skip
 def test_comm_pref(browser):
     comm_pref = CommunicationPreferences(browser)

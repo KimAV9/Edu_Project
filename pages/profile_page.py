@@ -1,3 +1,4 @@
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
 import random
@@ -121,6 +122,13 @@ ed_choose_gender = (By.XPATH, '//div[@id="menu-"]/descendant::div[@class="cds-se
 ed_save = (By.XPATH, '//button[@data-track-component="profile_save_intro_profile"]')
 
 
+dl_wk_history_edit = (By.XPATH, '//button[@data-track-component="profile_edit_work_history"]')
+dl_edu_edit = (By.XPATH, '//button[@data-track-component="profile_edit_education_history"]')
+dl_wk_pref_edit = (By.XPATH, '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_edit_work_preferences"]')
+dl_remove_wk_epx = (By.XPATH, '//button[@data-track-component="profile_remove_work_history"]')
+dl_remove_edu = (By.XPATH, '//button[@data-track-component="profile_remove_education_history"]')
+dl_remove_wk_pref = (By.XPATH, '//button[@data-testid="delete-role-preference-button"]')
+dl_save_wk_pre = (By.XPATH, '//button[@data-track-component="profile_save_work_preferences"]')
 class ProfilePage(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
@@ -140,7 +148,7 @@ class ProfilePage(AuthPage):
     def p_open_prof_menu(self):
         return self.find(c_prof_menu).click()
 
-    @allure.step('Open settings page')
+    @allure.step('Open profile page')
     def p_open_profile(self):
         return self.find(c_profile).click()
 
@@ -361,3 +369,60 @@ class ProfilePage(AuthPage):
     @allure.step('Click save in edit personal details')
     def ed2_save(self):
         return self.find(ed_save).click()
+
+class ProfilePageDeleteData(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+    @allure.step('Open account menu')
+    def p_open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open profile page')
+    def p_open_profile(self):
+        return self.find(c_profile).click()
+
+    def click_edit_work_exp(self):
+        try:
+            return self.find(dl_wk_history_edit).click()
+        except NoSuchElementException:
+            return True
+
+    def remove_work_exp(self):
+        try:
+            return self.find(dl_remove_wk_epx).click()
+        except NoSuchElementException:
+            return True
+
+    def click_edit_edu(self):
+        try:
+            return self.find(dl_edu_edit).click()
+        except NoSuchElementException:
+            return True
+
+    def remove_edu(self):
+        try:
+            return self.find(dl_remove_edu).click()
+        except NoSuchElementException:
+            return True
+
+    def click_edit_wk_pref(self):
+        try:
+            return self.find(dl_wk_pref_edit).click()
+        except NoSuchElementException:
+            return True
+
+    def remove_wk_pref(self):
+        try:
+            return self.find(dl_remove_wk_pref).click()
+        except NoSuchElementException:
+            return True
+
+    def save_wk_pref(self):
+        try:
+            return self.find(dl_save_wk_pre).click()
+        except NoSuchElementException:
+            return True

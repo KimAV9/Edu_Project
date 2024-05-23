@@ -108,13 +108,34 @@ vid_check_off_subs1 = (By.XPATH,
                        '//ul[@id="subtitle-menu"]/descendant::button[1]/child::em[@class="cif-lg cif-fw c-subtitles-menu-item-selected-icon css-10pgxt2"]')
 vid_check_off_subs2 = (By.XPATH,
                        '//ul[@id="subtitle-menu"]/descendant::button[2]/child::em[@class="cif-lg cif-fw c-subtitles-menu-item-selected-icon css-10pgxt2"]')
+
+vid_settings = (
+    By.XPATH, '//button[@class="vjs-menu-button vjs-menu-button-popup vjs-button vjs-control c-vjs-button"]')
 vid_quality = (By.XPATH, '')
 
 vid_playback = (By.XPATH, '')
 vid_playback_1 = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::button[@aria-label][1]')
 vid_playback_2 = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::button[@aria-label][2]')
-vid_playback_current = (By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::span[@class="playback-rate-text css-4iw9bi"]')
+vid_playback_current = (
+    By.XPATH, '//div[@class="rc-PlaybackRateChangeSection"]/descendant::span[@class="playback-rate-text css-4iw9bi"]')
 
+nt_save_note = (By.XPATH, '//button[@data-track-component="create_video_highlight"]')
+nt_course_home_page = (
+By.XPATH, '//nav[@aria-label="Primary breadcrumb"]/descendant::li[@class="cds-breadcrumbs-listItem"][1]')
+nt_notes = (By.XPATH, '//li[@data-e2e="notesNavigationItem"]')
+nt_saved_note = (By.XPATH, '//main[@id="main"]/descendant::div[@data-e2e="snapshot-container"][1]')
+nt_timing_notes_video = (By.XPATH, '//div[@role="tabpanel"]/descendant::button[@aria-label][1]')
+nt_timing_notes_save = (By.XPATH, '//p[@aria-label="Duration"]')
+nt_timing_video = (By.XPATH, '//div[@class="rc-VideoTimeDisplay horizontal-box align-items-absolute-center"]/child::span[@class="current-time-display"]]')
+nt_notes_video = (By.XPATH, '//div[@aria-label="Related lecture content tabs"]/descendant::button[2]')
+
+nt_thgts_edit_notes = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[1]')
+nt_thgts_write = (By.ID, 'edit-note')
+nt_thgts_save = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[1]')
+nt_thgts_check = (By.XPATH, '//p[@data-e2e="video-note-text"]')
+
+nt_delete_note = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[2]')
+nt_confirm_delete = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[1]')
 
 class EnrollToCourse(AuthPage):
     def __init__(self, browser):
@@ -297,7 +318,7 @@ class RateCourse(AuthPage):
         return self.find(r_click_submit)
 
 
-class RetakeTest(CompleteCourse):
+class RetakeTest(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
 
@@ -325,13 +346,14 @@ class RetakeTest(CompleteCourse):
         return self.find(rt_is_capable)
 
 
-class VideoPlayerCheck(CompleteCourse):
+class VideoPlayerCheck(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
         self.playback1 = None
         self.playback2 = None
-        self.playback3 = None
-        self.playback_current = None
+        self.quality1 = None
+        self.quality2 = None
+        self.quality_current = None
 
     @allure.step('Open main page')
     def temp_open(self):
@@ -341,8 +363,8 @@ class VideoPlayerCheck(CompleteCourse):
     def click_pause(self):
         return
 
-    def playback_current_assert(self):
-        return self.find(vid_playback_current)
+    def click_settings(self):
+        return self.find(vid_settings).click()
 
     def playback_assertion_1(self):
         return self.find(vid_playback_1)
@@ -350,11 +372,180 @@ class VideoPlayerCheck(CompleteCourse):
     def playback_assertion_2(self):
         return self.find(vid_playback_2)
 
-    def playback_to_text(self):
+    def playback_to_click_check(self):
         self.playback1 = self.playback_assertion_1()
         playback1 = self.playback1.get_attribute('aria-label')
+        self.playback2 = self.playback_assertion_2()
+        playback2 = self.playback2.get_attribute('aria-label')
+        print(playback2)
         print(playback1)
+        if playback1 == 'decrease playback rate to 0.75' and playback2 == 'increase playback rate to 1.25':
+            self.find(vid_playback_1).click()
+            print(playback1)
+            if playback2 == 'increase playback rate to 1':
+                print('hahah3')
+        elif playback2 == ('increase playback rate to 1'):
+            self.find(vid_playback_2).click()
+            print(playback2)
+            if playback2 == 'increase playback rate to 1.25':
+                print('hahah4')
 
-    def check_playback(self):
-        playback_current = self.playback_current_assert().text
-        print(playback_current)
+    def playback_check_a(self):
+        return self.find(vid_playback_1)
+
+    def playback_check_b(self):
+        return self.find(vid_playback_2)
+
+    def playback_check(self):
+        self.playback_check1 = self.playback_check_a()
+        playback_check1 = self.playback_check1.get_attribute('aria-label')
+        self.playback_check2 = self.playback_check_b()
+        playback_check2 = self.playback_check2.get_attribute('aria-label')
+        if playback_check1 == ('increase playback rate to 1'):
+            self.find(vid_playback_2).click()
+            print(playback_check1)
+        elif playback_check2 == ('increase playback rate to 1.25'):
+            self.find(vid_playback_1).click()
+            print(playback_check2)
+        elif playback_check2 != ('w'):
+            return False
+
+    def quality_assertion_1(self):
+        return self.find(vid_playback_1)
+
+    def quality_assertion_2(self):
+        return self.find(vid_playback_2)
+
+    def quality_to_assert(self):
+        self.quality1 = self.playback_assertion_1()
+        quality1 = self.quality2.get_attribute('aria-label')
+        self.quality2 = self.playback_assertion_2()
+        quality2 = self.quality2.get_attribute('aria-label')
+        if quality1 == ('decrease playback rate to 0.75') and quality2 == ('increase playback rate to 1.25'):
+            self.find(vid_playback_1).click()
+        else:
+            self.find(vid_playback_2).click()
+
+    def quality_check(self):
+        if self.quality1 == ('increase playback rate to 1'):
+            print(self.playback2)
+        elif self.quality2 == ('increase playback rate to 1.25'):
+            print(self.playback2)
+
+
+class SavingNotesCheck(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+        self.timing_vid_nt = None
+        self.timing_nt_save = None
+        self.timing_vid = None
+
+    @allure.step('Open main page')
+    def temp_open(self):
+        return self.browser.get(
+            'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
+
+    def click_save_note(self):
+        return self.find(nt_save_note).click()
+
+    def check_video_notes_timing(self):
+        return self.find(nt_timing_notes_video)
+
+    def save_video_notes_timing(self):
+        self.timing_vid_nt = self.check_video_notes_timing()
+        return self.timing_vid_nt
+
+    def click_course_homepage(self):
+        return self.find(nt_course_home_page).click()
+
+    def click_notes(self):
+        return self.find(nt_notes).click()
+
+    def check_saved_notes_timing(self):
+        return self.find(nt_timing_notes_save)
+
+    def save_notes_saved_timing(self):
+        self.timing_nt_save = self.check_saved_notes_timing()
+        return self.timing_nt_save
+
+    def open_note(self):
+        self.find(nt_saved_note).click()
+
+    def click_notes_video(self):
+        focus_window = self.browser.window_handles
+        self.browser.switch_to.window(focus_window[1])
+        return self.find(nt_notes_video).click()
+
+    def check_video_timing(self):
+        return self.find(nt_timing_video)
+
+    def save_video_timing(self):
+        self.timing_vid = self.check_video_timing()
+        return self.timing_vid
+
+    def timing_check(self):
+        timing_vid_nt = self.timing_vid_nt().get_attribute('@aria-label')
+        timing_nt_save = self.timing_nt_save.text
+        timing_vid = self.timing_vid.text
+
+        print(timing_vid, timing_vid_nt, timing_nt_save)
+
+class DeleteNotes(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+        self.timing_vid_nt = None
+        self.timing_nt_save = None
+        self.timing_vid = None
+
+    @allure.step('Open main page')
+    def temp_open(self):
+        return self.browser.get(
+            'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
+
+    def click_save_note(self):
+        return self.find(nt_save_note).click()
+
+    def click_course_homepage(self):
+        return self.find(nt_course_home_page).click()
+
+    def click_notes(self):
+        return self.find(nt_notes).click()
+
+    def click_delete(self):
+        return self.find(nt_delete_note).click()
+
+    def click_confirm_delete(self):
+        return self.find(nt_confirm_delete).click()
+
+
+class AddThoughts(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def temp_open(self):
+        return self.browser.get(
+            'https://www.coursera.org/learn/business-analysis-process-management/lecture/dOFt9/welcome-to-your-guided-project')
+
+    def click_save_note(self):
+        return self.find(nt_save_note).click()
+
+    def click_course_homepage(self):
+        return self.find(nt_course_home_page).click()
+
+    def click_notes(self):
+        return self.find(nt_notes).click()
+
+    def click_edit_thoughts(self):
+        return self.find(nt_thgts_edit_notes).click()
+
+    def add_thoughts(self):
+        return self.find(nt_thgts_write).send_keys("asd")
+    def save_thoughts(self):
+        return self.find(nt_thgts_save).click()
+    def check_added_thoughts(self):
+        return self.find(nt_thgts_check)
+
+
+
+

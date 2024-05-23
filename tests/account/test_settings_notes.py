@@ -5,6 +5,7 @@ import pytest_order
 
 
 @allure.story('Change preferences on Notes&Highlights in settings')
+@pytest.mark.order(10)
 @pytest.mark.skip
 def test_notes(browser):
     comm_pref = NotesAndHighlights(browser)

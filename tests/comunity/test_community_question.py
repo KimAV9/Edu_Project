@@ -6,6 +6,7 @@ import pytest_order
 
 
 @pytest.mark.skip
+@pytest.mark.order(12)
 def test_question(browser):
     test_questions = AskQuestion(browser)
 

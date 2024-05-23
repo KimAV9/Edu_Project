@@ -5,6 +5,7 @@ from time import sleep
 import pytest_order
 
 @pytest.mark.skip
+@pytest.mark.order(11)
 def test_tags(browser):
     test_tag = TagsTesting(browser)
 

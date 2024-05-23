@@ -6,6 +6,7 @@ import pytest_order
 
 
 @allure.story('Change additional in profile')
+@pytest.mark.order(6)
 @pytest.mark.skip
 def test_additional_info(browser):
     profile_page = ProfilePage(browser)

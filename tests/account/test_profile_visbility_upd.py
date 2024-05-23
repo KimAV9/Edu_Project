@@ -6,6 +6,7 @@ import pytest_order
 
 
 @allure.story('Change visibility in profile')
+@pytest.mark.order(4)
 @pytest.mark.skip
 def test_visibility_update(browser):
     profile_page = ProfilePage(browser)

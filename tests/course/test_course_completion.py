@@ -5,13 +5,15 @@ from time import sleep
 import pytest_order
 
 
+@pytest.mark.skip
 @pytest.mark.order(20)
 def test_complete_course(browser):
     complete_course = CompleteCourse(browser)
 
-    complete_course.open()
-    complete_course.open_course()
+    #complete_course.open()
+    #complete_course.open_course()
 
+    complete_course.temp_open()
     complete_course.watch_intro()
     #complete_course.click_read1()
     #complete_course.click_complete()

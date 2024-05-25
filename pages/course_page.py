@@ -44,6 +44,7 @@ v_pause = (By.XPATH, '//button[@aria-label="Pause"]')
 v_volume_slider = (By.XPATH, '//div[@class="rc-slider rc-VolumeSlider"]')
 v_volume_mute = (By.XPATH, '//button[@aria-label="Mute"]')
 v_save_note = (By.ID, 'save-note-button')
+v_click_notes_in_video = (By.XPATH, '//button[@data-track-component="focused_lex_lecture_tabs_notes"]')
 v_add_thoughts = (By.XPATH, '//div[@aria-labelledby="cds-react-aria-214-tab-NOTES"]/descendant::button[5]')
 v_write_thoughts = (By.ID, 'note-text')
 v_save_thoughts = (By.XPATH, '//button[@data-track-component= "edit_highlight"]')
@@ -137,7 +138,7 @@ nt_saved_note = (By.XPATH, '//main[@id="main"]/descendant::div[@data-e2e="snapsh
 nt_timing_notes_video = (By.XPATH, '//div[@role="tabpanel"]/descendant::button[@aria-label][1]')
 nt_timing_notes_save = (By.XPATH, '//p[@aria-label="Duration"]')
 nt_timing_video = (By.XPATH,
-                   '//div[@class="rc-VideoTimeDisplay horizontal-box align-items-absolute-center"]/child::span[@class="current-time-display"]]')
+                   '//div[@class="rc-VideoTimeDisplay horizontal-box align-items-absolute-center"]/child::span[@class="current-time-display"]')
 nt_notes_video = (By.XPATH, '//div[@aria-label="Related lecture content tabs"]/descendant::button[2]')
 
 nt_thgts_edit_notes = (By.XPATH, '//div[@data-e2e="note-card"]/descendant::button[1]')
@@ -207,8 +208,15 @@ class CompleteCourse(AuthPage):
     def open_course(self):
         return self.find(c_open_course).click()
 
+    def temp_open(self):
+        return self.browser.get('https://www.coursera.org/learn/business-analysis-process-management/home/week/1')
+
     @allure.step('Watch introduction to course video')
     def watch_intro(self):
+        #focus_window = self.browser.window_handles
+        #self.browser.switch_to.window(focus_window[0])
+        #self.browser.close()
+        #self.browser.switch_to.window(focus_window[1])
         return self.find(c_click_watch_intro).click()
 
     @allure.step('Click reading #1 page')
@@ -229,10 +237,6 @@ class CompleteCourse(AuthPage):
 
     @allure.step('Click lab page')
     def click_lab(self):
-        og_window = self.browser.current_window_handle
-        focus_window = self.browser.window_handles
-        self.browser.close(og_window)
-        self.browser.switch_to.window(focus_window[0])
         return self.find(c_click_lab).click()
 
     @allure.step('Click open lab')
@@ -244,12 +248,13 @@ class CompleteCourse(AuthPage):
         focus_window = self.browser.window_handles
         self.browser.switch_to.window(focus_window[1])
         self.find(c_how_want_to_learn_open).click()
-        self.browser.switch_to.window(focus_window[2])
-        self.browser.close()
+        if len(focus_window) > 1:
+            self.browser.switch_to.window(focus_window[2])
+            self.browser.close()
         self.browser.switch_to.window(focus_window[1])
         self.browser.close()
-        sleep(10)
         self.browser.switch_to.window(focus_window[0])
+        sleep(5)
 
     @allure.step('Click quiz page')
     def click_quiz(self):
@@ -496,6 +501,7 @@ class SavingNotesCheck(AuthPage):
 
     @allure.step('Check timings of the video')
     def check_video_notes_timing(self):
+        self.find(v_click_notes_in_video).click()
         return self.find(nt_timing_notes_video)
 
     @allure.step('Save the timing')
@@ -525,12 +531,12 @@ class SavingNotesCheck(AuthPage):
         self.find(nt_saved_note).click()
 
     def click_notes_video(self):
-        focus_window = self.browser.window_handles
-        self.browser.switch_to.window(focus_window[1])
         return self.find(nt_notes_video).click()
 
     @allure.step('Check opened timing in the notes')
     def check_video_timing(self):
+        focus_window = self.browser.window_handles
+        self.browser.switch_to.window(focus_window[1])
         return self.find(nt_timing_video)
 
     @allure.step('Save video timing')
@@ -540,9 +546,9 @@ class SavingNotesCheck(AuthPage):
 
     @allure.step('Check if saved timings of the note correspond to the one opened')
     def timing_check(self):
-        timing_vid_nt = self.timing_vid_nt().get_attribute('@aria-label')
-        timing_nt_save = self.timing_nt_save.text
-        timing_vid = self.timing_vid.text
+        timing_vid_nt = self.timing_nt_save().get_attribute('@aria-label')
+        timing_nt_save = self.save_video_timing.text
+        timing_vid = self.check_video_timing.text
 
         print(timing_vid, timing_vid_nt, timing_nt_save)
 

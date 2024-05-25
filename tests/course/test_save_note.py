@@ -4,7 +4,7 @@ from pages.course_page import SavingNotesCheck
 from time import sleep
 import pytest_order
 
-@pytest.mark.skip
+
 @pytest.mark.order(15)
 def test_saving_notes_check(browser):
     saving_notes_check = SavingNotesCheck(browser)

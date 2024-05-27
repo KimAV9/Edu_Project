@@ -166,6 +166,7 @@ class CheckLocalization(AuthPage):
 
     @allure.step('Open language menu')
     def open_lang_menu(self):
+        sleep(3)
         return self.find(l_click_language_menu).click()
 
     @allure.step('Choose a random language')

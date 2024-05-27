@@ -5,7 +5,12 @@ from time import sleep
 import pytest_order
 
 
-@allure.story('Change work experience in profile')
+@allure.title('Test change work expirirence in profile')
+@allure.description('Изменение данных в профиле аккаунта о работе')
+@allure.tag('Account', 'Profile')
+@allure.epic('Account')
+@allure.feature('Profile')
+@allure.story('Work history')
 @pytest.mark.order(15)
 
 def test_work_exp(browser):

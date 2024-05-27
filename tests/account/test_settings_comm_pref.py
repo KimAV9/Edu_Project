@@ -10,6 +10,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Settings')
 @allure.story('Communication preferences')
+@allure.severity('Normal')
 @pytest.mark.order(19)
 def test_comm_pref(browser):
     comm_pref = CommunicationPreferences(browser)

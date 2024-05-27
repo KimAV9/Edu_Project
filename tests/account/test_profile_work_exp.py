@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Profile')
 @allure.story('Work history')
+@allure.severity('Normal')
 @pytest.mark.order(15)
 def test_work_exp(browser):
     profile_page_wk_exp = ProfilePageWorkExp(browser)

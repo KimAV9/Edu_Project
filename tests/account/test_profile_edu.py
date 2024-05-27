@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Profile')
 @allure.story('Education')
+@allure.severity('Normal')
 @pytest.mark.order(12)
 def test_education(browser):
     profile_page_edu = ProfilePageEducation(browser)

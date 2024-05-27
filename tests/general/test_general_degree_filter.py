@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('General')
 @allure.feature('Degrees')
 @allure.story('Degree filter')
+@allure.severity('Low')
 @pytest.mark.order(6)
 def test_degree_filter_program_lvl(browser):
     degree_filter_program_lvl = DegreeFilterProgramLvl(browser)

@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Profile')
 @allure.story('Deletion')
+@allure.severity('Normal')
 @pytest.mark.order(17)
 def test_delete_personal_data(browser):
     profile_page = ProfilePageDeleteData(browser)

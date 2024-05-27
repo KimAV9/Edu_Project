@@ -11,6 +11,7 @@ from time import sleep
 @allure.epic('General')
 @allure.feature('Reviews')
 @allure.story('Sort by helpful')
+@allure.severity('Low')
 @pytest.mark.order(7)
 def test_check_reviews_sort_hlp(browser):
     check_reviews_sort_hlp = CheckReviewSort(browser)

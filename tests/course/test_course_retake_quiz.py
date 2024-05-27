@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Completion')
 @allure.story('Quiz Retake')
+@allure.severity('Normal')
 @pytest.mark.order(28)
 def test_retake_test(browser):
     retake_test = RetakeTest(browser)

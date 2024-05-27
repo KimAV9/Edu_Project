@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Community')
 @allure.feature('Create discussion')
 @allure.story('Question')
+@allure.severity('Normal')
 @pytest.mark.order(9)
 def test_question(browser):
     test_questions = AskQuestion(browser)

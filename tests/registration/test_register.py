@@ -12,6 +12,7 @@ import allure
 @allure.epic('Registration')
 @allure.feature('Registration')
 @allure.story('Register an account')
+@allure.severity('Blocker')
 @pytest.mark.order(1)
 def test_register(browser):
     register_page = RegistrationPage(browser)

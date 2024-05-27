@@ -10,6 +10,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Notes')
 @allure.story('Delete')
+@allure.severity('Normal')
 @pytest.mark.order(26)
 def test_delete_notes(browser):
     delete_notes = DeleteNotes(browser)

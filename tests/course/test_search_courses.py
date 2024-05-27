@@ -10,6 +10,7 @@ import allure
 @allure.epic('Course')
 @allure.feature('Search')
 @allure.story('Search and Filter')
+@allure.severity('High')
 @pytest.mark.order(21)
 def test_filter(browser):
     filter_check = FilterCheck(browser)

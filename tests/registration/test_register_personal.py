@@ -11,6 +11,7 @@ import allure
 @allure.epic('Registration')
 @allure.feature('Personalization')
 @allure.story('Add personalization data to the account')
+@allure.severity('Normal')
 @pytest.mark.order(2)
 def test_background(browser):
     background = Background(browser)

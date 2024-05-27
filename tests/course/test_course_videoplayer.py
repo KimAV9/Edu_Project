@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Video Player')
 @allure.story('Video settings')
+@allure.severity('High')
 @pytest.mark.order(23)
 def test_video_player_check(browser):
     video_player_check = VideoPlayerCheck(browser)

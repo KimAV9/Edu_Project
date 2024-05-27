@@ -10,7 +10,8 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Settings')
 @allure.story('Account Deletion')
-@pytest.mark.skip
+@allure.severity('Normal')
+@pytest.mark.skip('Due to broken authorization cannot be executed at the same time with password change')
 @pytest.mark.order(31)
 def test_delete_account(browser):
     delete_account = DeleteAccount(browser)

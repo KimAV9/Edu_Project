@@ -10,6 +10,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Completion')
 @allure.story('Completion check')
+@allure.severity('Low')
 @pytest.mark.order(29)
 def test_complete_course(browser):
     complete_course = CourseCompletion(browser)

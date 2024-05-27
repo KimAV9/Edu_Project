@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Community')
 @allure.feature('Search')
 @allure.story('Tag')
+@allure.severity('Normal')
 @pytest.mark.order(8)
 def test_tags(browser):
     test_tag = TagsTesting(browser)

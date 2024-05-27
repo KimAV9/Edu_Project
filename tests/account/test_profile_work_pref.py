@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Profile')
 @allure.story('Work preferences')
+@allure.severity('High')
 @pytest.mark.order(16)
 def test_work_pref(browser):
     profile_page_wk_pref = ProfilePageWorkPref(browser)

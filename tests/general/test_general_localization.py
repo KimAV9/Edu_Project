@@ -11,6 +11,7 @@ from time import sleep
 @allure.epic('General')
 @allure.feature('Localization')
 @allure.story('Language change')
+@allure.severity('Normal')
 @pytest.mark.order(4)
 def test_check_localization(browser):
     check_localization = CheckLocalization(browser)

@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Profile')
 @allure.story('Personal info')
+@allure.severity('Normal')
 @pytest.mark.order(13)
 def test_edit_personal_info(browser):
     profile_page_pers_info = ProfilePagePersInfo(browser)

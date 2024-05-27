@@ -10,6 +10,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Review')
 @allure.story('Rate')
+@allure.severity('Low')
 @pytest.mark.order(22)
 def test_complete_course(browser):
     rate_course = RateCourse(browser)

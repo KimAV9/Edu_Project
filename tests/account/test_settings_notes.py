@@ -10,6 +10,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Settings')
 @allure.story('Notes&Highlights')
+@allure.severity('Low')
 @pytest.mark.order(20)
 def test_notes(browser):
     comm_pref = NotesAndHighlights(browser)

@@ -12,6 +12,7 @@ import pytest_order
 @allure.epic('Authorization')
 @allure.feature('Authorization')
 @allure.story('Log into the account')
+@allure.severity('Blocker')
 @pytest.mark.order(3)
 def test_auth(browser):
     auth_page = AuthPage(browser)

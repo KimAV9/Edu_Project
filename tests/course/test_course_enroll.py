@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Search')
 @allure.story('Enrollment')
+@allure.severity('High')
 @pytest.mark.order(22)
 def test_enroll_to_course(browser):
     enroll_to_course = EnrollToCourse(browser)

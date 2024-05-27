@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Notes')
 @allure.story('Add thoughts')
+@allure.severity('Normal')
 @pytest.mark.order(25)
 def test_add_thoughts(browser):
     add_thoughts = AddThoughts(browser)

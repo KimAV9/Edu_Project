@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Profile')
 @allure.story('Visibility')
+@allure.severity('Low')
 @pytest.mark.order(14)
 def test_visibility_update(browser):
     profile_page_vis = ProfilePageVisibility(browser)

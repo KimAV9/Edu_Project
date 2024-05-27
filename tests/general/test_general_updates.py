@@ -9,8 +9,8 @@ import pytest_order
 @allure.tag('Updates')
 @allure.epic('Updates')
 @allure.story('Update check')
+@allure.severity('Normal')
 @pytest.mark.order(4)
-@pytest.mark.skip
 def test_check_updts(browser):
     check_updts = CheckUpdates(browser)
 

@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Community')
 @allure.feature('Create discussion')
 @allure.story('Poll')
+@allure.severity('Normal')
 @pytest.mark.order(10)
 def test_poll(browser):
     ask_poll = AskPoll(browser)

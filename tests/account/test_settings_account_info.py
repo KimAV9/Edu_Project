@@ -10,6 +10,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Settings')
 @allure.story('Info')
+@allure.severity('Normal')
 @pytest.mark.order(18)
 def test_settings(browser):
     settings_page = AccountSettings(browser)

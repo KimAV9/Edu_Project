@@ -10,6 +10,7 @@ import pytest_order
 @allure.epic('Course')
 @allure.feature('Notes')
 @allure.story('Save')
+@allure.severity('Normal')
 @pytest.mark.order(24)
 def test_saving_notes_check(browser):
     saving_notes_check = SavingNotesCheck(browser)

@@ -11,6 +11,7 @@ import pytest_order
 @allure.epic('Account')
 @allure.feature('Profile')
 @allure.story('Additional info')
+@allure.severity('Normal')
 @pytest.mark.order(11)
 def test_additional_info(browser):
     profile_page_add_info = ProfilePageAddInfo(browser)

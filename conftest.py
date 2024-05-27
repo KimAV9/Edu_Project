@@ -1,8 +1,11 @@
+import allure
 from selenium import webdriver
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+
+@allure.title('Create Chrome Browser options')
 @pytest.fixture
 def browser(headless_flg=False):
     options = Options()
@@ -14,6 +17,5 @@ def browser(headless_flg=False):
     #options.add_argument('--headless')
     options.add_argument("start-maximized")
     chrome_browser = webdriver.Chrome(options=options)
-    chrome_browser.implicitly_wait(10)
+    chrome_browser.implicitly_wait(5)
     return chrome_browser
-

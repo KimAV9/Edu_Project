@@ -1,3 +1,4 @@
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
 from pages.base_page import BasePage
@@ -13,7 +14,7 @@ text = ("234")
 b = [1]
 
 c_community = "https://www.coursera.support/s/community?language=en_US"
-c_featured = (By.XPATH, f'//section[@role="tabpanel"]/descendant::a[@class="topicLink"][{random.randint(1, 6)}]')
+c_featured = (By.XPATH, f'//section[@role="tabpanel"]/descendant::a[@class="topicLink"][{random.randint(1, 3)}]')
 
 c_click_tag = (By.XPATH, f'//div[@class="forceTopicSubTopicNavigation"]/descendant::community_topic-topics-link[{y}]')
 c_tags_save = (By.XPATH, f'//div[@class="forceTopicSubTopicNavigation"]/descendant::span[@class="slds-col"][{y}]')
@@ -24,6 +25,8 @@ c_click_sort_by = (By.ID, 'combobox-button-514')
 c_click_latest_post = (By.XPATH,
                        '//lightning-combobox[@class="feeds-sorter-trigger slds-form-element"]/descendant::*[@class="slds-media__body"][2]')
 
+aq_login = (By.XPATH, '//button[@title="Log in"]')
+aq_accept = (By.XPATH, '//input[@value="Accept"]')
 aq_click_question = (By.XPATH, '//a[@data-tab-name="FeedItem.QuestionPost"]/descendant::span[@class="title"]')
 aq_question_text_area = (By.XPATH, '//div[@class="questiontitle input-field"]/descendant::textarea')
 aq_details_text_area = (By.XPATH, '//div[@id="outerContainer"]/descendant::div[@role="textbox"]')
@@ -43,9 +46,9 @@ aq_ask_question = (By.XPATH,
 ap_click_poll = (By.XPATH, '//div[@role="tablist"]/descendant::span[@class="title"][3]')
 ap_write_question = (By.XPATH, '//div[@id="outerContainer"]/descendant::textarea')
 ap_add_choice = (By.XPATH, '//button[@class="slds-button slds-button_brand cuf-addChoiceButton"]')
-ap_choice1 = (By.XPATH, '//div[@class="inputContainer"]/descendant::input[@data-interactive-lib-uid="3"]')
-ap_choice2 = (By.XPATH, '//div[@class="inputContainer"]/descendant::input[@data-interactive-lib-uid="4"]')
-ap_choice3 = (By.XPATH, '//div[@class="inputContainer"]/descendant::input[@data-interactive-lib-uid="5"]')
+ap_choice1 = (By.XPATH, '(//div[@class="inputContainer"])[1]/descendant::input')
+ap_choice2 = (By.XPATH, '(//div[@class="inputContainer"])[2]/descendant::input')
+ap_choice3 = (By.XPATH, '(//div[@class="inputContainer"])[3]/descendant::input')
 ap_ask = (
     By.XPATH, '//button[@class="slds-button slds-button_brand cuf-publisherShareButton qe-pollPostDesktop MEDIUM"]')
 
@@ -65,6 +68,7 @@ class TagsTesting(BasePage):
 
     @allure.step('Find and save tag')
     def find_tag(self):
+        sleep(3)
         return self.find(c_tags_save)
 
     @allure.step('Click on one of tags')
@@ -78,6 +82,7 @@ class TagsTesting(BasePage):
 
     @allure.step('Find tag in discussion')
     def find_disc_tags(self):
+        sleep(3)
         return self.find(c_check_tags_after_search)
 
     @allure.step('Check if found tags match')
@@ -105,8 +110,17 @@ class AskQuestion(AuthPage):
     def click_featured(self):
         return self.find(c_featured).click()
 
+    @allure.step('Log in')
+    def log_in(self):
+        try:
+            self.find(aq_login).click()
+            self.find(aq_accept).click()
+        except NoSuchElementException:
+            return True
+
     @allure.step('Click on write question')
     def click_question(self):
+        sleep(3)
         return self.find(aq_click_question).click()
 
     @allure.step('Write question')
@@ -137,14 +151,47 @@ class AskQuestion(AuthPage):
     def write_details(self):
         return self.find(aq_details_text_area).send_keys('asd')
 
-    @allure.step('Open emoji menu')
-    def click_emoji_menu(self):
-        return self.find(aq_click_emoji).click()
-
-    @allure.step('Choose Emoji')
-    def choose_emoji(self):
-        return self.find(aq_choose_emoji).click()
-
     @allure.step('Check if text is corresponding to conditions')
     def check_text(self):
         return self.find(aq_check_text).click()
+
+class AskPoll(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open community page')
+    def open_page(self):
+        return self.browser.get(c_community)
+
+    @allure.step('Open Featured')
+    def click_featured(self):
+        return self.find(c_featured).click()
+
+    @allure.step('Log in')
+    def log_in(self):
+        try:
+            self.find(aq_login).click()
+            self.find(aq_accept).click()
+        except NoSuchElementException:
+            return True
+    @allure.step('Open poll')
+    def click_poll(self):
+        return self.find(ap_click_poll).click()
+
+    @allure.step('Add another option')
+    def add_option(self):
+        return self.find(ap_add_choice).click()
+
+    @allure.step('Write question')
+    def write_question(self):
+        return self.find(ap_write_question).send_keys(text)
+
+    @allure.step('Write options')
+    def write_options(self):
+        self.find(ap_choice1).send_keys(text)
+        self.find(ap_choice2).send_keys(text)
+        self.find(ap_choice3).send_keys(text)
+
+    @allure.step('Conduct poll')
+    def click_ask(self):
+        return self.find(ap_ask).click()

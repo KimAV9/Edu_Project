@@ -4,7 +4,12 @@ import pytest
 import pytest_order
 
 
-@pytest.mark.order(26)
+@allure.title('Test updates')
+@allure.description('При выполнение определенных действий получить обновлений об аккаунте')
+@allure.tag('Updates')
+@allure.epic('Updates')
+@allure.story('Update check')
+@pytest.mark.order(4)
 @pytest.mark.skip
 def test_check_updts(browser):
     check_updts = CheckUpdates(browser)

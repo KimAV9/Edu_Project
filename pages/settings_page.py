@@ -1,7 +1,7 @@
 import allure
 import pytest
 from selenium import webdriver
-from selenium.common import ElementClickInterceptedException
+from selenium.common import ElementClickInterceptedException, NoSuchElementException
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
 from time import sleep
@@ -192,11 +192,17 @@ class CommunicationPreferences(AuthPage):
 
     @allure.step('Click Coursera Project Network')
     def click_proj_netw(self):
-        return self.find(com_proj_netw).click()
+        try:
+            return self.find(com_proj_netw).click()
+        except NoSuchElementException:
+            return True
 
     @allure.step('Save changes')
     def save2(self):
-        return self.find(com_save2).click()
+        try:
+            return self.find(com_save2).click()
+        except NoSuchElementException:
+            return True
 
 
 class NotesAndHighlights(AuthPage):

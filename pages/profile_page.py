@@ -56,11 +56,11 @@ e_add_name_of_inst = (By.XPATH, f'//div[@class="menu-item-inactive css-1bol722"]
 
 e_degree = (By.XPATH, '//div[@data-e2e= "profile-education-degree"]')
 e_add_degree = (
-By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(3, 7)}]')
+    By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(3, 7)}]')
 
 e_discipline = (By.XPATH, '//div[@data-e2e="profile-education-discipline"]')
 e_add_discipline = (
-By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(1, 12)}]')
+    By.XPATH, f'//div[@id="menu-"]/descendant::div[@class="cds-selectOption-container"][{random.randint(1, 12)}]')
 e_area_of_conc = (By.XPATH, '//div[@data-track-app="account_profile"]/descendant::input[3]')
 
 e_start_month = (By.XPATH, '//div[@data-e2e= "profile-education-start-date"]/descendant::div[@data-e2e="date-month"]')
@@ -82,6 +82,7 @@ e_save = (By.XPATH, '//button[@data-track-component="profile_save_education_hist
 
 i_add = (By.XPATH,
          '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_add_additional_info"]')
+i_add2 = (By.XPATH, '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_edit_additional_info"]')
 i_about = (By.XPATH, '//div[@data-track-app="account_profile"]/descendant::textarea[1]')
 i_save = (By.XPATH, '//button[@data-track-component="profile_additional_info_save"]')
 
@@ -107,7 +108,7 @@ v_share_link = (By.XPATH, '//section[@data-e2e="profile-photo-and-invitation-sec
 v_copy_link = (By.XPATH, '//div[@data-track-component="profile_share_public_profile_dialog"]/descendant::button[1]')
 
 v_customize_link = (
-By.XPATH, '//div[@data-track-component="profile_share_public_profile_dialog"]/descendant::button[2]')
+    By.XPATH, '//div[@data-track-component="profile_share_public_profile_dialog"]/descendant::button[2]')
 v_enter_customization = (By.XPATH, '//input[@aria-label="Profile Link"]')
 v_save_custom = (By.XPATH, '//button[@class="cds-149 cds-button-disableElevation cds-button-primary css-ra3hwj"]')
 v_cancel_custom = (By.XPATH,
@@ -136,20 +137,13 @@ dl_remove_wk_pref = (By.XPATH, '//button[@data-testid="delete-role-preference-bu
 dl_save_wk_pre = (By.XPATH, '//button[@data-track-component="profile_save_work_preferences"]')
 
 
-class ProfilePage(AuthPage):
+class ProfilePageWorkExp(AuthPage):
     def __init__(self, browser):
         super().__init__(browser)
 
     @allure.step('Open main page')
     def open2(self):
         return self.main_page()
-
-    @allure.step('Login')
-    def login2(self):
-        self.login()
-        self.login_email()
-        self.login_password()
-        return self.login_button()
 
     @allure.step('Open account menu')
     def p_open_prof_menu(self):
@@ -228,6 +222,31 @@ class ProfilePage(AuthPage):
     def w2_save(self):
         return self.find(w_save).click()
 
+
+class ProfilePageEducation(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open account menu')
+    def p_open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open profile page')
+    def p_open_profile(self):
+        return self.find(c_profile).click()
+
+    @allure.step('Click on add work experience')
+    def w2_add_work_exp(self):
+        return self.find(w_add_work_exp).click()
+
+    @allure.step('Click on select institution in work experience')
+    def w2_click_name_of_inst(self):
+        return self.find(w_name_of_inst).click()
+
     @allure.step('Click add education')
     def e2_add_edu(self):
         return self.find(e_edu).click()
@@ -304,6 +323,23 @@ class ProfilePage(AuthPage):
     def e2_save(self):
         return self.find(e_save).click()
 
+
+class ProfilePageWorkPref(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open account menu')
+    def p_open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open profile page')
+    def p_open_profile(self):
+        return self.find(c_profile).click()
+
     @allure.step('Click add work preferences')
     def wp2_work_pref(self):
         return self.find(wp_add_work_pref).click()
@@ -327,31 +363,57 @@ class ProfilePage(AuthPage):
     @allure.step('Click save in work preferences')
     def wp2_save(self):
         self.find(wp_save).click()
-        sleep(2)
+
+
+class ProfilePageAddInfo(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open account menu')
+    def p_open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open profile page')
+    def p_open_profile(self):
+        return self.find(c_profile).click()
 
     @allure.step('Click add additional info')
     def i2_add_info(self):
-        return self.find(i_add).click()
+        sleep(2)
+        try:
+            return self.find(i_add).click()
+        except NoSuchElementException:
+            return self.find(i_add2).click()
 
     @allure.step('Add text in about field')
     def i2_write_about(self):
+        self.find(i_about).clear()
         return self.find(i_about).send_keys(text)
 
     @allure.step('Click save in additional info')
     def i2_save(self):
         return self.find(i_save).click()
 
-    @allure.step('Click update profile visibility')
-    def v2_udt_vis(self):
-        return self.find(v_update_visibility).click()
 
-    @allure.step('Click on checkbox anyone with a link')
-    def v2_who_sees(self):
-        return self.find(v_anyone_with_link).click()
+class ProfilePagePersInfo(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
 
-    @allure.step('Click done')
-    def v2_done(self):
-        return self.find(v_done).click()
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open account menu')
+    def p_open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open profile page')
+    def p_open_profile(self):
+        return self.find(c_profile).click()
 
     @allure.step('Click edit button')
     def ed2_edit(self):
@@ -376,6 +438,35 @@ class ProfilePage(AuthPage):
     @allure.step('Click save in edit personal details')
     def ed2_save(self):
         return self.find(ed_save).click()
+
+
+class ProfilePageVisibility(AuthPage):
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Open main page')
+    def open2(self):
+        return self.main_page()
+
+    @allure.step('Open account menu')
+    def p_open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open profile page')
+    def p_open_profile(self):
+        return self.find(c_profile).click()
+
+    @allure.step('Click update profile visibility')
+    def v2_udt_vis(self):
+        return self.find(v_update_visibility).click()
+
+    @allure.step('Click on checkbox anyone with a link')
+    def v2_who_sees(self):
+        return self.find(v_anyone_with_link).click()
+
+    @allure.step('Click done')
+    def v2_done(self):
+        return self.find(v_done).click()
 
 
 class ProfilePageDeleteData(AuthPage):

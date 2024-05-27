@@ -5,12 +5,17 @@ import pytest_order
 
 
 
-@pytest.mark.skip
-@pytest.mark.order(24)
+@allure.title('Test degree filter')
+@allure.description('Фильтрация успешна')
+@allure.tag('Degree', 'Filter')
+@allure.epic('General')
+@allure.feature('Degrees')
+@allure.story('Degree filter')
+@pytest.mark.order(6)
 def test_degree_filter_program_lvl(browser):
     degree_filter_program_lvl = DegreeFilterProgramLvl(browser)
 
-    degree_filter_program_lvl.temp_open()
+    degree_filter_program_lvl.open()
     degree_filter_program_lvl.click_program_lvl()
     degree_filter_program_lvl.choose_lvl()
     degree_filter_program_lvl.click_apply()

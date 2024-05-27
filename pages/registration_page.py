@@ -1,9 +1,11 @@
+from selenium.common import NoSuchElementException
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 import random
 from time import sleep
 import allure
+
 
 register = (By.XPATH, '//a[@class="standardSignupBtnLink signup-jff-fp-btn link-button primary"]')
 register_fullname = (By.ID, 'name')
@@ -15,6 +17,12 @@ wait_for_mail = (By.XPATH, '//input[@class="emailbox-input opentip')
 forgot_password = (By.XPATH, '//button[@class="_eweitj" and text() ="Forgot password?"]')
 forgot_email = (By.XPATH, '//input[@class="css-xvsivy"]')
 reset_password = (By.XPATH, '//button[@class="css-1deqff9"]')
+c_prof_menu = (By.XPATH, '//button[@data-track-component="profile_drop_down_btn"]')
+c_profile = (By.XPATH, '//div[@class="header-right-nav-wrapper css-1h9ktwj"]/descendant::li[@role="menuitem"][11]')
+dl_wk_pref_edit = (By.XPATH,
+                        '//span[@data-e2e="profile-desktop-panel"]/descendant::button[@data-track-component="profile_edit_work_preferences"]')
+dl_remove_wk_pref = (By.XPATH, '//button[@data-testid="delete-role-preference-button"]')
+dl_save_wk_pre = (By.XPATH, '//button[@data-track-component="profile_save_work_preferences"]')
 
 p_w_occupation = (By.ID, 'OccupationsDropdown~workExp')
 p_create_option1 = (By.XPATH, '//div[@role="listbox"]')
@@ -31,7 +39,6 @@ p_now_student = (By.XPATH, '//input[@data-track-component="current_student_check
 p_cg_occupation = (By.ID, 'OccupationsDropdown~goals')
 p_industry = (By.ID, 'IndustriesDropdown~careerGoal')
 p_continue = (By.XPATH, '//button[@data-track-component="onboarding_continue_button"]')
-
 
 class RandomGenerator:
     def __init__(self, min_length=4, max_length=10):
@@ -64,7 +71,7 @@ class RegistrationPage(BasePage):
     def __init__(self, browser):
         super().__init__(browser)
 
-    @allure.step('OPen main page')
+    @allure.step('Open main page')
     def open_page(self):
         return self.browser.get('https://www.coursera.org/')
 
@@ -180,3 +187,33 @@ class Background(BasePage):
     @allure.step('Save changes')
     def click_cont(self):
         return self.find(p_continue).click()
+
+    @allure.step('Open account menu')
+    def open_prof_menu(self):
+        return self.find(c_prof_menu).click()
+
+    @allure.step('Open profile page')
+    def open_profile(self):
+        return self.find(c_profile).click()
+
+    @allure.step('Open existing work preferences')
+    def click_edit_wk_pref(self):
+        try:
+            return self.find(dl_wk_pref_edit).click()
+        except NoSuchElementException:
+            return True
+
+    @allure.step('Remove existing work preferences')
+    def remove_wk_pref(self):
+        try:
+            return self.find(dl_remove_wk_pref).click()
+        except NoSuchElementException:
+            return True
+
+    @allure.step('Save removal of work preferences')
+    def save_wk_pref(self):
+        try:
+            return self.find(dl_save_wk_pre).click()
+        except NoSuchElementException:
+            return True
+

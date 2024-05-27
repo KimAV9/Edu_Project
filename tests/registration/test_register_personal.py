@@ -2,9 +2,16 @@ import pytest
 from pages.registration_page import Background
 from time import sleep
 import pytest_order
+import allure
 
-@pytest.mark.skip
-@pytest.mark.order(27)
+
+@allure.title('Test personal data for personalization')
+@allure.description('Успешное заполнение данных для персонализации и сохранение их профиле')
+@allure.tag('Registration', 'Personalization')
+@allure.epic('Registration')
+@allure.feature('Personalization')
+@allure.story('Add personalization data to the account')
+@pytest.mark.order(2)
 def test_background(browser):
     background = Background(browser)
 
@@ -26,5 +33,12 @@ def test_background(browser):
     background.write_industry()
 
     background.click_cont()
+
+    background.open_prof_menu()
+    background.open_profile()
+
+    background.click_edit_wk_pref()
+    background.remove_wk_pref()
+    background.save_wk_pref()
 
     browser.quit()

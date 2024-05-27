@@ -5,15 +5,21 @@ from time import sleep
 import pytest_order
 
 
-@pytest.mark.skip
-@pytest.mark.order(12)
+@allure.title('Test create a question in Community')
+@allure.description('Работоспособность функционала создания вопросов')
+@allure.tag('Community', 'Ask')
+@allure.epic('Community')
+@allure.feature('Create discussion')
+@allure.story('Question')
+@pytest.mark.order(9)
 def test_question(browser):
     test_questions = AskQuestion(browser)
 
     test_questions.open_page()
     test_questions.click_featured()
-    sleep(5)
+    test_questions.log_in()
     test_questions.click_question()
+
     test_questions.write_question()
     test_questions.make_bold()
     test_questions.make_italic()
@@ -21,7 +27,6 @@ def test_question(browser):
     test_questions.make_underline()
     test_questions.make_bulletin_list()
     test_questions.write_details()
-    #test_questions.click_emoji_menu()
-    #test_questions.choose_emoji()
+
     test_questions.check_text()
     browser.quit()

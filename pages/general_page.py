@@ -1,5 +1,7 @@
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from pages.auth_page import AuthPage
+from pages.search_page import FilterCheck
 import random
 import allure
 from time import sleep
@@ -14,12 +16,15 @@ upd_check = (By.XPATH, '//div[@data-e2e="simple-notification-subject" and text()
 r_more_reviews = (By.XPATH, '//a[@data-track-component="reviews_module_view_more_cta"]')
 r_review1 = (By.XPATH, '//div[@data-e2e="reviews-list"]/descendant::span[@class="cds-button-label"][1]')
 r_review2 = (By.XPATH, '//div[@data-e2e="reviews-list"]/descendant::span[@class="cds-button-label"][2]')
+r_course_rand = (By.XPATH, f'//div[@id="rendered-content"]/descendant::a[@data-click-key="search.search.click.search_card"][{random.randint(1,12)}]')
+r_course = (By.XPATH, '//div[@id="rendered-content"]/descendant::a[@data-click-key="search.search.click.search_card"][1]')
 
 l_click_language_menu = (By.XPATH, '//ul[@id = "authenticated-info-menu"]/descendant::li[@role="menuitem"][9]')
 l_choose_language = (
 By.XPATH, f'//div[@class="cds-popoverContainer-inner"]/descendant::div[text()!="English"][{random.randint(1, 16)}]')
 l_choose_language_eng = (By.XPATH, '//div[@class="cds-popoverContainer-inner"]/descendant::div[text()="English"]')
 l_check_translation = (By.XPATH, '//div[@data-testid="consumer-home-page"]/descendant::span[text()][1]')
+c_text_area = (By.XPATH, '//input[@class="react-autosuggest__input"]')
 
 x = random.randint(1, 2)
 
@@ -51,7 +56,7 @@ class CheckUpdates(AuthPage):
         return self.find(upd_check)
 
 
-class CheckReviewSort(AuthPage):
+class CheckReviewSort(FilterCheck):
     def __init__(self, browser):
         super().__init__(browser)
         more_reviews_link = None
@@ -59,11 +64,26 @@ class CheckReviewSort(AuthPage):
         review2 = None
 
     @allure.step('Open main page')
-    def temp_open(self):
-        return self.browser.get('https://www.coursera.org/learn/indigenous-canada')
+    def opens(self):
+        self.open2()
+
+    @allure.step('Search something')
+    def searches(self):
+        self.find(c_text_area).send_keys('bussiness')
+        self.search()
+
+    @allure.step("Open random course")
+    def open_random_course(self):
+        try:
+            return self.find(r_course_rand).click()
+        except NoSuchElementException:
+            return self.find(r_course).click()
+
 
     @allure.step('Find more reviews button')
     def more_reviews(self):
+        focus_window = self.browser.window_handles
+        self.browser.switch_to.window(focus_window[1])
         return self.find(r_more_reviews)
 
     @allure.step('Open more reviews')
@@ -81,6 +101,7 @@ class CheckReviewSort(AuthPage):
 
     @allure.step('Compare if default review sorting by helpful is working as intended')
     def compare_reviews(self):
+        sleep(3)
         review1 = self.assert_review1().text
         review2 = self.assert_review2().text
         numbers_review1 = int(re.search(r'\d+', review1).group())
@@ -98,7 +119,7 @@ class DegreeFilterProgramLvl(AuthPage):
         degree2 = None
 
     @allure.step('Open main page')
-    def temp_open(self):
+    def open(self):
         return self.browser.get('https://www.coursera.org/degrees')
 
     @allure.step('Open the filter for degree levels')

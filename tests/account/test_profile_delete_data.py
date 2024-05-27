@@ -4,9 +4,14 @@ from pages.profile_page import ProfilePageDeleteData
 from time import sleep
 import pytest_order
 
-@allure.story('Change additional in profile')
-@pytest.mark.order(7)
-@pytest.mark.skip
+
+@allure.title('Test delete data in profile')
+@allure.description('Удаление данных из профиля аккаунта такие как work history, education, work preference')
+@allure.tag('Account', 'Profile')
+@allure.epic('Account')
+@allure.feature('Profile')
+@allure.story('Deletion')
+@pytest.mark.order(17)
 def test_delete_personal_data(browser):
     profile_page = ProfilePageDeleteData(browser)
 

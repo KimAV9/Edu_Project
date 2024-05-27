@@ -4,10 +4,13 @@ import pytest
 import pytest_order
 
 
-@allure.story('Change account information in settings')
-@allure.description('Change Fullname, Email, Timezone and language')
-@pytest.mark.order(8)
-@pytest.mark.skip
+@allure.title('Test change communication preferences in profile')
+@allure.description('Изменение данных на странице настроек')
+@allure.tag('Account', 'Settings')
+@allure.epic('Account')
+@allure.feature('Settings')
+@allure.story('Info')
+@pytest.mark.order(18)
 def test_settings(browser):
     settings_page = AccountSettings(browser)
 

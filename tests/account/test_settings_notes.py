@@ -4,9 +4,13 @@ import pytest
 import pytest_order
 
 
-@allure.story('Change preferences on Notes&Highlights in settings')
-@pytest.mark.order(10)
-@pytest.mark.skip
+@allure.title('Test change Notes & Highlights preferences in profile')
+@allure.description('Изменить предпочтения в во вкладке "Notes & Highlights" в настройках')
+@allure.tag('Account', 'Settings')
+@allure.epic('Account')
+@allure.feature('Settings')
+@allure.story('Notes&Highlights')
+@pytest.mark.order(20)
 def test_notes(browser):
     comm_pref = NotesAndHighlights(browser)
 

@@ -4,7 +4,7 @@ from pages.course_page import RetakeTest
 from time import sleep
 import pytest_order
 
-@pytest.mark.skip
+
 @allure.title('Test retake quiz')
 @allure.description('Пересдать тест')
 @allure.tag('Course', 'Completion')

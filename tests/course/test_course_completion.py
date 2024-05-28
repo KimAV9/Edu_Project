@@ -4,7 +4,7 @@ from pages.course_page import CompleteCourse
 from time import sleep
 import pytest_order
 
-@pytest.mark.skip
+
 @allure.title('Test course completion')
 @allure.description('Пройти полностью курс')
 @allure.tag('Course', 'Completion')

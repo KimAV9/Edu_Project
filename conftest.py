@@ -3,11 +3,12 @@ from selenium import webdriver
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import os
 
 
 @allure.title('Create Chrome Browser options')
 @pytest.fixture
-def browser(headless_flg=False):
+def browser(request):
     options = Options()
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])

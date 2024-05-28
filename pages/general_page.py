@@ -189,6 +189,7 @@ class CheckLocalization(AuthPage):
 
     @allure.step('Confirm the change')
     def confirm_localization(self):
+        sleep(5)
         return self.check_lang()
 
     def confirm_lang_change1(self):

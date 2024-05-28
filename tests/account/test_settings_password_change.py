@@ -11,7 +11,6 @@ import pytest_order
 @allure.feature('Settings')
 @allure.story('Password')
 @allure.severity('High')
-@pytest.mark.skip
 @pytest.mark.order(30)
 def test_password(browser):
     password_change = PasswordChange(browser)

@@ -4,6 +4,7 @@ from pages.course_page import RateCourse
 from time import sleep
 import pytest_order
 
+
 @allure.title('Test rate course')
 @allure.description('Оставить отзыв на курс')
 @allure.tag('Course', 'Review')
@@ -12,7 +13,7 @@ import pytest_order
 @allure.story('Rate')
 @allure.severity('Low')
 @pytest.mark.order(22)
-def test_complete_course(browser):
+def test_rate_course(browser):
     rate_course = RateCourse(browser)
 
     rate_course.open()

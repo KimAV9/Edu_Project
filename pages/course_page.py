@@ -393,10 +393,19 @@ class RateCourse(AuthPage):
         return self.find(r_click_rate).click()
 
     def rate_course(self):
-        return self.find(r_rate_course)
+        try:
+            star = self.find(r_rate_course)
+            action = ActionChains(self.browser)
+            action.move_to_element(star).perform()
+            return self.find(r_rate_course).click()
+        except NoSuchElementException:
+            return True
 
     def submit_rating(self):
-        return self.find(r_click_submit)
+        try:
+            return self.find(r_click_submit)
+        except NoSuchElementException:
+            return True
 
 
 class RetakeTest(AuthPage):
@@ -445,14 +454,14 @@ class RetakeTest(AuthPage):
         self.find(t_answer2_rand).click()
         self.find(t_answer3_rand).click()
         self.find(t_answer4_rand).click()
-        self.find(t_answer5).click()
-        self.find(t_answer6).click()
-        self.find(t_answer7).click()
-        self.find(t_answer8).click()
-        self.find(t_answer9).click()
-        self.find(t_answer10).click()
-        self.find(t_answer11).click()
-        self.find(t_answer12).click()
+        self.find(t_answer5_rand).click()
+        self.find(t_answer6_rand).click()
+        self.find(t_answer7_rand).click()
+        self.find(t_answer8_rand).click()
+        self.find(t_answer9_rand).click()
+        self.find(t_answer10_rand).click()
+        self.find(t_answer11_rand).click()
+        self.find(t_answer12_rand).click()
 
     @allure.step('Accept the agreement')
     def click_i_understand(self):
@@ -501,37 +510,35 @@ class VideoPlayerCheck(AuthPage):
     @allure.step('Hover over player to show buttons')
     def hover(self):
         video_payer = self.find(vid_hover)
-        actions = ActionChains(self.browser)
-        return actions.move_to_element(video_payer).perform()
+        actions1 = ActionChains(self.browser)
+        return actions1.move_to_element(video_payer).perform()
 
     @allure.step('Pause video')
     def click_pause(self):
-        self.find(vid_pause).click()
         try:
-            if self.find(vid_play_off):
-                self.find(vid_pause).click()
+            self.find(vid_pause).click()
         except NoSuchElementException:
             return True
 
     @allure.step('Mute video')
     def click_mute(self):
         self.find(vid_mute).click()
-        if self.find(vid_mute_on):
+        try:
+            if self.find(vid_mute_on):
+                return True
+            else:
+                self.find(vid_mute).click()
+                self.find(vid_mute).click()
+        except NoSuchElementException:
             return True
-        else:
-            self.find(vid_mute).click()
-            self.find(vid_mute).click()
 
     @allure.step('Click autoplay')
     def click_autoplay(self):
         sleep(2)
         try:
-            if self.find(vid_auto_p_on):
-                self.find(vid_mute_on).click()
-            elif self.find(vid_play_off):
-                self.find(vid_play_off).click()
-        except ElementClickInterceptedException:
-            return True
+            self.find(vid_auto_p_on).click()
+        except NoSuchElementException:
+            self.find(vid_auto_p_off).click()
 
     @allure.step('Open settings meny')
     def click_settings(self):

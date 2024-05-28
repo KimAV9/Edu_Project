@@ -35,6 +35,7 @@ c_click_lab = (By.XPATH,
                '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][4]')
 c_click_quiz = (By.XPATH,
                 '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][5]')
+c_click_quiz_alt = (By.XPATH, '//strong[text()="Quiz: "]/ancestor::a[@data-testid="learner-app-client-navigation-link"]')
 c_click_survey = (By.XPATH,
                   '//div[@class="item-tools-and-content-container"]/descendant::a[@data-testid="learner-app-client-navigation-link"][6]')
 
@@ -58,6 +59,7 @@ v_check_timing = (By.XPATH, '//div[@aria-valuetext="* seconds"]')
 t_start_assignment = (By.XPATH, '//button[@data-tests="action-button"]')
 t_resume_assignment = (By.XPATH, '//button[@data-test="action-button"]')
 t_cont = (By.XPATH, '//button[@data-tests="continue-button"]')
+
 t_answer1_rand = (By.XPATH, '(//div[@class="rc-FormPartsQuestion"])[1]/descendant::div[@class="rc-Option"][*]')
 t_answer2_rand = (By.XPATH,
              '(//div[@class="rc-FormPartsQuestion"])[2]/descendant::div[@class="rc-Option"][*]')
@@ -306,8 +308,10 @@ class CompleteCourse(AuthPage):
 
     @allure.step('Click quiz page')
     def click_quiz(self):
-        return self.find(c_click_quiz).click()
-
+        try:
+            return self.find(c_click_quiz).click()
+        except NoSuchElementException:
+            return self.find(c_click_quiz_alt).click()
     def press_cont(self):
         try:
             self.find(t_cont).click()
@@ -317,24 +321,30 @@ class CompleteCourse(AuthPage):
     @allure.step('Click start quiz')
     def click_start_quiz(self):
         try:
-            return self.find(t_start_assignment).click()
+            try:
+                return self.find(t_start_assignment).click()
+            except NoSuchElementException:
+                return self.find(t_resume_assignment).click()
         except NoSuchElementException:
-            return self.find(t_resume_assignment).click()
+                return self.find(rt_try_again).click()
 
     @allure.step('Answer questions')
     def answer_quiz(self):
-        self.find(t_answer1_rand).click()
-        self.find(t_answer2_rand).click()
-        self.find(t_answer3_rand).click()
-        self.find(t_answer4_rand).click()
-        self.find(t_answer5_rand).click()
-        self.find(t_answer6_rand).click()
-        self.find(t_answer7_rand).click()
-        self.find(t_answer8_rand).click()
-        self.find(t_answer9_rand).click()
-        self.find(t_answer10_rand).click()
-        self.find(t_answer11_rand).click()
-        self.find(t_answer12_rand).click()
+        answer_number = 0
+        while True:
+            try:
+                answer_number += 1
+                t_answer_rand = (By.XPATH,
+                                 f'(//div[@class="rc-FormPartsQuestion"])[{answer_number}]/descendant::div[@class="rc-Option"][{random.randint(1,4)}]')
+                t_rand_answer_1 = (By.XPATH,
+                                 f'(//div[@class="rc-FormPartsQuestion"])[{answer_number}]/descendant::div[@class="rc-Option"][*]')
+                try:
+                    self.find(t_answer_rand).click()
+                except NoSuchElementException:
+                    self.find(t_rand_answer_1).click()
+            except NoSuchElementException:
+                break
+
 
     @allure.step('Accept the agreement')
     def click_i_understand(self):

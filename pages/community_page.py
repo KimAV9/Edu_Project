@@ -11,7 +11,6 @@ from bs4 import BeautifulSoup
 x = random.randint(1, 6)
 y = random.randint(1, 3)
 text = ("234")
-b = [1]
 
 c_community = "https://www.coursera.support/s/community?language=en_US"
 c_featured = (By.XPATH, f'//section[@role="tabpanel"]/descendant::a[@class="topicLink"][{random.randint(1, 3)}]')
@@ -19,7 +18,7 @@ c_featured = (By.XPATH, f'//section[@role="tabpanel"]/descendant::a[@class="topi
 c_click_tag = (By.XPATH, f'//div[@class="forceTopicSubTopicNavigation"]/descendant::community_topic-topics-link[{y}]')
 c_tags_save = (By.XPATH, f'//div[@class="forceTopicSubTopicNavigation"]/descendant::span[@class="slds-col"][{y}]')
 
-c_check_tags_after_search = (By.XPATH, '//div[@data-feed-type]/descendant::a[1]/descendant::span[@title][1]')
+
 
 c_click_sort_by = (By.ID, 'combobox-button-514')
 c_click_latest_post = (By.XPATH,
@@ -56,6 +55,7 @@ ap_ask = (
 class TagsTesting(BasePage):
     def __init__(self, browser):
         super().__init__(browser)
+        self.b = 1
         self.tag_click = None
 
     @allure.step('Open community page')
@@ -83,6 +83,7 @@ class TagsTesting(BasePage):
     @allure.step('Find tag in discussion')
     def find_disc_tags(self):
         sleep(3)
+        c_check_tags_after_search = (By.XPATH, f'//div[@data-feed-type]/descendant::a[{self.b}]/descendant::span[@title][1]')
         return self.find(c_check_tags_after_search)
 
     @allure.step('Check if found tags match')
@@ -91,10 +92,9 @@ class TagsTesting(BasePage):
         while True:
             try:
                 if tag_check1 == self.tag_click:
-                    return True
-                break
-            except Exception:
-                b + 1
+                    break
+            except tag_check1 != self.tag_click:
+                self.b += 1
                 self.find_disc_tags()
 
 

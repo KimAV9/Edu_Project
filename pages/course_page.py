@@ -60,32 +60,6 @@ t_start_assignment = (By.XPATH, '//button[@data-tests="action-button"]')
 t_resume_assignment = (By.XPATH, '//button[@data-test="action-button"]')
 t_cont = (By.XPATH, '//button[@data-tests="continue-button"]')
 
-t_answer1_rand = (By.XPATH, '(//div[@class="rc-FormPartsQuestion"])[1]/descendant::div[@class="rc-Option"][*]')
-t_answer2_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[2]/descendant::div[@class="rc-Option"][*]')
-t_answer3_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[3]/descendant::div[@class="rc-Option"][*]')
-t_answer4_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[4]/descendant::div[@class="rc-Option"][*]')
-t_answer5_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[5]/descendant::div[@class="rc-Option"][*]')
-t_answer6_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[6]/descendant::div[@class="rc-Option"][*]')
-
-t_answer7_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[7]/descendant::div[@class="rc-Option"][*]')
-
-t_answer8_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[8]/descendant::div[@class="rc-Option"][*]')
-t_answer9_rand = (By.XPATH,
-             '(//div[@class="rc-FormPartsQuestion"])[9]/descendant::div[@class="rc-Option"][*]')
-t_answer10_rand = (By.XPATH,
-              '(//div[@class="rc-FormPartsQuestion"])[10]/descendant::div[@class="rc-Option"][*]')
-t_answer11_rand = (By.XPATH,
-              '(//div[@class="rc-FormPartsQuestion"])[11]/descendant::div[@class="rc-Option"][*]')
-t_answer12_rand = (By.XPATH,
-              '(//div[@class="rc-FormPartsQuestion"])[12]/descendant::div[@class="rc-Option"][*]')
-
 t_agree_to_terms = (By.XPATH, '//input[@id="agreement-checkbox-base"]')
 t_write_name = (By.XPATH, '//input[@class="css-opa93d"]')
 t_submit = (By.XPATH, '//button[@data-tests="submit-button"]')
@@ -460,18 +434,18 @@ class RetakeTest(AuthPage):
         return self.find(rt_is_capable)
     @allure.step('Answer questions')
     def answer_quiz(self):
-        self.find(t_answer1_rand).click()
-        self.find(t_answer2_rand).click()
-        self.find(t_answer3_rand).click()
-        self.find(t_answer4_rand).click()
-        self.find(t_answer5_rand).click()
-        self.find(t_answer6_rand).click()
-        self.find(t_answer7_rand).click()
-        self.find(t_answer8_rand).click()
-        self.find(t_answer9_rand).click()
-        self.find(t_answer10_rand).click()
-        self.find(t_answer11_rand).click()
-        self.find(t_answer12_rand).click()
+        self.find(t_answer1).click()
+        self.find(t_answer2).click()
+        self.find(t_answer3).click()
+        self.find(t_answer4).click()
+        self.find(t_answer5).click()
+        self.find(t_answer6).click()
+        self.find(t_answer7).click()
+        self.find(t_answer8).click()
+        self.find(t_answer9).click()
+        self.find(t_answer10).click()
+        self.find(t_answer11).click()
+        self.find(t_answer12).click()
 
     @allure.step('Accept the agreement')
     def click_i_understand(self):

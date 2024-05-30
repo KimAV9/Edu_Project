@@ -364,6 +364,7 @@ class RateCourse(AuthPage):
     @allure.step('Open main page')
     def open(self):
         try:
+            sleep(5)
             self.browser.get('https://www.coursera.org/my-learning?myLearningTab=COMPLETED')
             self.find(r_open_menu)
         except AssertionError:

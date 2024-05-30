@@ -7,7 +7,7 @@ import os
 
 
 @allure.title('Create Chrome Browser options')
-@pytest.fixture
+@pytest.fixture(scope='function')
 def browser(request):
     options = Options()
     options.add_argument("--disable-blink-features=AutomationControlled")

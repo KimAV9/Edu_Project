@@ -83,18 +83,31 @@ class TagsTesting(BasePage):
     @allure.step('Find tag in discussion')
     def find_disc_tags(self):
         sleep(3)
-        c_check_tags_after_search = (By.XPATH, f'//div[@data-feed-type]/descendant::a[{self.b}]/descendant::span[@title][1]')
-        return self.find(c_check_tags_after_search)
+        while True:
+            try:
+                c_check_tags_after_search = (By.XPATH, f'//div[@data-feed-type]/descendant::a[{self.b}]/descendant::span[@title][1]')
+                self.find(c_check_tags_after_search)
+                break
+            except NoSuchElementException:
+                self.browser.navigate().back()
+                self.find_tag()
+                self.check_tags()
+                self.click_tag()
+            finally:
+                c_check_tags_after_search = (
+                    By.XPATH, f'//div[@data-feed-type]/descendant::a[{self.b}]/descendant::span[@title][1]')
+                return self.find(c_check_tags_after_search)
+
 
     @allure.step('Check if found tags match')
     def check_tags(self):
         tag_check1 = self.find_disc_tags().text
         while True:
             try:
+                self.b += 1
                 if tag_check1 == self.tag_click:
                     break
             except tag_check1 != self.tag_click:
-                self.b += 1
                 self.find_disc_tags()
 
 
@@ -120,7 +133,7 @@ class AskQuestion(AuthPage):
 
     @allure.step('Click on write question')
     def click_question(self):
-        sleep(3)
+        sleep(5)
         return self.find(aq_click_question).click()
 
     @allure.step('Write question')

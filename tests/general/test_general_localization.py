@@ -20,9 +20,7 @@ def test_check_localization(browser):
 
     check_localization.open_lang_menu()
     check_localization.choose_lang()
-    check_localization.confirm_lang_change1()
     check_localization.assert_text()
-    check_localization.confirm_lang_change1()
 
     check_localization.open_lang_menu()
     check_localization.choose_eng()

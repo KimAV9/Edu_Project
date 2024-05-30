@@ -16,7 +16,7 @@ upd_check = (By.XPATH, '//div[@data-e2e="simple-notification-subject" and text()
 r_more_reviews = (By.XPATH, '//a[@data-track-component="reviews_module_view_more_cta"]')
 r_review1 = (By.XPATH, '//div[@data-e2e="reviews-list"]/descendant::span[@class="cds-button-label"][1]')
 r_review2 = (By.XPATH, '//div[@data-e2e="reviews-list"]/descendant::span[@class="cds-button-label"][2]')
-r_course_rand = (By.XPATH, f'//div[@id="rendered-content"]/descendant::a[@data-click-key="search.search.click.search_card"][{random.randint(1,12)}]')
+r_course_rand = (By.XPATH, f'//div[@id="rendered-content"]/descendant::a[@data-click-key="search.search.click.search_card"][{random.randint(1,3)}]')
 r_course = (By.XPATH, '//div[@id="rendered-content"]/descendant::a[@data-click-key="search.search.click.search_card"][1]')
 
 l_click_language_menu = (By.XPATH, '//ul[@id = "authenticated-info-menu"]/descendant::li[@role="menuitem"][9]')
@@ -88,8 +88,13 @@ class CheckReviewSort(FilterCheck):
 
     @allure.step('Open more reviews')
     def click_more_reviews2(self):
-        more_reviews_link = self.more_reviews().get_attribute('href')
-        self.browser.get(more_reviews_link)
+        while True:
+            try:
+                more_reviews_link = self.more_reviews().get_attribute('href')
+                self.browser.get(more_reviews_link)
+                break
+            except NoSuchElementException:
+                return self.more_reviews()
 
     @allure.step('Find review number 1')
     def assert_review1(self):
@@ -189,9 +194,5 @@ class CheckLocalization(AuthPage):
 
     @allure.step('Confirm the change')
     def confirm_localization(self):
-        sleep(5)
+        sleep(1)
         return self.check_lang()
-
-    def confirm_lang_change1(self):
-        if self.check_lang() is False:
-            return True

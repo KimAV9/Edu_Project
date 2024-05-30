@@ -12,7 +12,7 @@ import pytest_order
 @allure.feature('Review')
 @allure.story('Rate')
 @allure.severity('Low')
-@pytest.mark.order(22)
+@pytest.mark.order(30)
 def test_rate_course(browser):
     rate_course = RateCourse(browser)
 

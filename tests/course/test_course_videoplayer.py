@@ -1,5 +1,7 @@
 import allure
 import pytest
+from selenium.common import SessionNotCreatedException
+
 from pages.course_page import VideoPlayerCheck
 from time import sleep
 import pytest_order
@@ -41,6 +43,3 @@ def test_video_player_check(browser):
     video_player_check.quality_to_assert()
 
     browser.quit()
-
-
-
